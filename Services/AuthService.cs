@@ -1,15 +1,14 @@
 using System;
 using System.Threading.Tasks;
 using DataEnteringQuality.Entities;
-using Microsoft.Extensions.Options;
 
-namespace DataEnteringQuality.Services.Teachers
+namespace DataEnteringQuality.Services
 {
-    public class TeacherAuthService : ITeacherAuthService
+    public class AuthService : IAuthService
     {
         private Teacher _teacher;
 
-        public TeacherAuthService() => _teacher = new Teacher()
+        public AuthService() => _teacher = new Teacher()
         {
             Id = Guid.NewGuid()
         };
@@ -19,6 +18,8 @@ namespace DataEnteringQuality.Services.Teachers
             var teacher = _teacher;
             if (!username.Equals(teacher.Username) && !password.Equals(teacher.Password))
                 return null;
+
+            teacher.Password = null;
 
             return await Task.Run(() => teacher);
         }

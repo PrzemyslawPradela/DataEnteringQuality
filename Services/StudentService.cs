@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataEnteringQuality.Entities;
 
-namespace DataEnteringQuality.Services.Students
+namespace DataEnteringQuality.Services
 {
     public class StudentService : IStudentService
     {

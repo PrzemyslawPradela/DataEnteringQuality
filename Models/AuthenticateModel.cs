@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DataEnteringQuality.Models
 {
-    public class TeacherAuthenticateModel
+    public class AuthenticateModel
     {
         [Required(ErrorMessage = "Nazwa użytkownika jest wymagana")]
         public string Username { get; set; }

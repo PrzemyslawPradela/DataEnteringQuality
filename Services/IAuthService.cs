@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using DataEnteringQuality.Entities;
 
-namespace DataEnteringQuality.Services.Teachers
+namespace DataEnteringQuality.Services
 {
-    public interface ITeacherAuthService
+    public interface IAuthService
     {
         Task<Teacher> AuthenticateTeacher(string username, string password);
     }

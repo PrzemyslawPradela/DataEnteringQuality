@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DataEnteringQuality.Entities;
 
-namespace DataEnteringQuality.Services.Students
+namespace DataEnteringQuality.Services
 {
     public interface IStudentService
     {

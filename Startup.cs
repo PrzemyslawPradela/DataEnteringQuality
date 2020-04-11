@@ -1,6 +1,5 @@
 using DataEnteringQuality.Helpers;
-using DataEnteringQuality.Services.Teachers;
-using DataEnteringQuality.Services.Students;
+using DataEnteringQuality.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,7 +32,7 @@ namespace DataEnteringQuality
             services.AddControllers();
             services.AddAuthentication("BasicAuthentication")
                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
-            services.AddScoped<ITeacherAuthService, TeacherAuthService>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IStudentService, StudentService>();
         }
 

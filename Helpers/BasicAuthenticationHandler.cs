@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using DataEnteringQuality.Entities;
-using DataEnteringQuality.Services.Teachers;
+using DataEnteringQuality.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -14,17 +14,17 @@ namespace DataEnteringQuality.Helpers
 {
     public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
-        private readonly ITeacherAuthService _teacherAuthService;
+        private readonly IAuthService _authService;
 
         public BasicAuthenticationHandler(
             IOptionsMonitor<AuthenticationSchemeOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
             ISystemClock clock,
-            ITeacherAuthService teacherAuthService)
+            IAuthService authService)
             : base(options, logger, encoder, clock)
         {
-            _teacherAuthService = teacherAuthService;
+            _authService = authService;
         }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -40,7 +40,7 @@ namespace DataEnteringQuality.Helpers
                 var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
                 var username = credentials[0];
                 var password = credentials[1];
-                teacher = await _teacherAuthService.AuthenticateTeacher(username, password);
+                teacher = await _authService.AuthenticateTeacher(username, password);
             }
             catch
             {
