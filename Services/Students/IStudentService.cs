@@ -6,7 +6,7 @@ namespace DataEnteringQuality.Services.Users
 {
     public interface IStudentService
     {
-        IEnumerable<Student> GetAll();
-        Task RegisterStudent(Student student);
+        Task<IEnumerable<Student>> GetAll();
+        Student RegisterStudent(Student student);
     }
 }

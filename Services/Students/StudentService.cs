@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataEnteringQuality.Entities;
@@ -9,20 +10,24 @@ namespace DataEnteringQuality.Services.Users
 {
     public class StudentService : IStudentService
     {
-        private AppSettings _appSettings;
         private List<Student> _students;
 
-        public StudentService(IOptions<AppSettings> appSettings)
+        public StudentService() => _students = new List<Student>();
+
+        public async Task<IEnumerable<Student>> GetAll()
         {
-            _appSettings = appSettings.Value;
-            _students = new List<Student>();
+            return await Task.Run(() => _students.OrderBy(x => x.Surname));
         }
 
-        public IEnumerable<Student> GetAll() => _students.OrderBy(x => x.Surname);
-
-        public Task RegisterStudent(Student student)
+        public Student RegisterStudent(Student student)
         {
             if (_students.Any(x => x.StudentNumber == student.StudentNumber))
                 throw new AppException("Student with number \"" + student.StudentNumber + "\" already exists");
+
+            student.Id = Guid.NewGuid();
+
+            _students.Add(student);
+
+            return student;
         }
     }
