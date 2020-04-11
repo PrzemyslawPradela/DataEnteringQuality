@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataEnteringQuality.Entities;
-using DataEnteringQuality.Helpers;
-using Microsoft.Extensions.Options;
 
-namespace DataEnteringQuality.Services.Users
+namespace DataEnteringQuality.Services.Students
 {
     public class StudentService : IStudentService
     {
@@ -19,15 +17,16 @@ namespace DataEnteringQuality.Services.Users
             return await Task.Run(() => _students.OrderBy(x => x.Surname));
         }
 
-        public Student RegisterStudent(Student student)
+        public async Task<Student> RegisterStudent(Student student)
         {
             if (_students.Any(x => x.StudentNumber == student.StudentNumber))
-                throw new AppException("Student with number \"" + student.StudentNumber + "\" already exists");
+                throw new Exception("Student with number \"" + student.StudentNumber + "\" already exists");
 
             student.Id = Guid.NewGuid();
 
             _students.Add(student);
 
-            return student;
+            return await Task.Run(() => student);
         }
     }
+}

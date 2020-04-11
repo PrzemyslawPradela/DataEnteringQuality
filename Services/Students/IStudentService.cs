@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DataEnteringQuality.Entities;
 
-namespace DataEnteringQuality.Services.Users
+namespace DataEnteringQuality.Services.Students
 {
     public interface IStudentService
     {
         Task<IEnumerable<Student>> GetAll();
-        Student RegisterStudent(Student student);
+        Task<Student> RegisterStudent(Student student);
     }
 }

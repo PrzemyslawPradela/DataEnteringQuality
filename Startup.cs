@@ -1,6 +1,9 @@
+using DataEnteringQuality.Helpers;
+using DataEnteringQuality.Services.Teachers;
+using DataEnteringQuality.Services.Students;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +29,12 @@ namespace DataEnteringQuality
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            services.AddCors();
+            services.AddControllers();
+            services.AddAuthentication("BasicAuthentication")
+               .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+            services.AddScoped<ITeacherAuthService, TeacherAuthService>();
+            services.AddScoped<IStudentService, StudentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
