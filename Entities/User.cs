@@ -2,7 +2,7 @@ using System;
 
 namespace DataEnteringQuality.Entities
 {
-    public class Teacher
+    public class User
     {
         public Guid Id { get; set; }
         public string Username => "ita";

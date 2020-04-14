@@ -6,22 +6,22 @@ namespace DataEnteringQuality.Services
 {
     public class AuthService : IAuthService
     {
-        private Teacher _teacher;
+        private User _user;
 
-        public AuthService() => _teacher = new Teacher()
+        public AuthService() => _user = new User()
         {
             Id = Guid.NewGuid()
         };
 
-        public async Task<Teacher> AuthenticateTeacher(string username, string password)
+        public async Task<User> Authenticate(string username, string password)
         {
-            var teacher = _teacher;
-            if (!username.Equals(teacher.Username) && !password.Equals(teacher.Password))
+            var user = _user;
+            if (!username.Equals(user.Username) && !password.Equals(user.Password))
                 return null;
 
-            teacher.Password = null;
+            user.Password = null;
 
-            return await Task.Run(() => teacher);
+            return await Task.Run(() => user);
         }
     }
 }

@@ -5,6 +5,6 @@ namespace DataEnteringQuality.Services
 {
     public interface IAuthService
     {
-        Task<Teacher> AuthenticateTeacher(string username, string password);
+        Task<User> Authenticate(string username, string password);
     }
 }

@@ -32,7 +32,7 @@ namespace DataEnteringQuality.Helpers
             if (!Request.Headers.ContainsKey("Authorization"))
                 return AuthenticateResult.Fail("Missing Authorization Header");
 
-            Teacher teacher = null;
+            User user = null;
             try
             {
                 var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
@@ -40,19 +40,19 @@ namespace DataEnteringQuality.Helpers
                 var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
                 var username = credentials[0];
                 var password = credentials[1];
-                teacher = await _authService.AuthenticateTeacher(username, password);
+                user = await _authService.Authenticate(username, password);
             }
             catch
             {
                 return AuthenticateResult.Fail("Invalid Authorization Header");
             }
 
-            if (teacher == null)
+            if (user == null)
                 return AuthenticateResult.Fail("Invalid Username or Password");
 
             var claims = new[] {
-                new Claim(ClaimTypes.NameIdentifier, teacher.Id.ToString()),
-                new Claim(ClaimTypes.Name, teacher.Username),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Username),
             };
             var identity = new ClaimsIdentity(claims, Scheme.Name);
             var principal = new ClaimsPrincipal(identity);

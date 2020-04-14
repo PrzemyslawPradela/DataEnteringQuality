@@ -19,7 +19,7 @@ namespace DataEnteringQuality.Controllers
         [HttpPost]
         public async Task<IActionResult> Authenticate([FromBody]AuthenticateModel model)
         {
-            var user = await _authService.AuthenticateTeacher(model.Username, model.Password);
+            var user = await _authService.Authenticate(model.Username, model.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
