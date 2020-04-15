@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DataEnteringQuality.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private IAuthService _authService;

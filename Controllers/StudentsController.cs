@@ -11,7 +11,7 @@ namespace DataEnteringQuality.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class StudentsController : ControllerBase
     {
         private IStudentService _studentService;

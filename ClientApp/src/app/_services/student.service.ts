@@ -11,7 +11,7 @@ export class StudentService {
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
   getStudents(): Observable<Student[]> {
-    return this.http.get<Student[]>(this.baseUrl + '/students');
+    return this.http.get<Student[]>(this.baseUrl + '/api/students');
   }
 
 }
