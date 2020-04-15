@@ -33,8 +33,8 @@ namespace DataEnteringQuality.Controllers
 
             try
             {
-                await _studentService.RegisterStudent(student);
-                return Ok();
+                var studentInfo = await _studentService.RegisterStudent(student);
+                return Ok(studentInfo);
             }
             catch (Exception ex)
             {
