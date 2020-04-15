@@ -1,3 +1,25 @@
-<p>
-  student-list works!
-</p>
+<div class="container mt-5 mb-5">
+  <div class="table-responsive-lg">
+    <table class="table">
+      <thead>
+        <tr class="table-primary">
+          <th scope="col">Lp.</th>
+          <th scope="col">Imię</th>
+          <th scope="col">Nazwisko</th>
+          <th scope="col">Numer indeksu</th>
+          <th scope="col">Grupa studencka</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of students; let i=index">
+          <th scope="row">{{i + 1}}</th>
+          <td>{{student.name}}</td>
+          <td>{{student.surname}}</td>
+          <td>{{student.studentNumber}}</td>
+          <td>{{student.class}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

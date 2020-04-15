@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { AuthComponent } from './auth/auth.component';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { StudentListComponent } from './students/student-list/student-list.component';
 import { StudentRegisterComponent } from './students/student-register/student-register.component';
@@ -24,7 +24,7 @@ import { StudentService } from './_services/student.service';
     HomeComponent,
     StudentListComponent,
     StudentRegisterComponent,
-    AuthComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -34,7 +34,7 @@ import { StudentService } from './_services/student.service';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'auth', component: AuthComponent },
+      { path: 'login', component: LoginComponent },
       { path: 'register', component: StudentRegisterComponent },
       { path: 'students', component: StudentListComponent, canActivate: [AuthGuard] },
 
