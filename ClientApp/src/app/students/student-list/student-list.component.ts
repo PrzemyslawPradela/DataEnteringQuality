@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { interval } from 'rxjs';
 import { Student } from 'src/app/_models/student';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { StudentService } from 'src/app/_services/student.service';
@@ -15,7 +16,10 @@ export class StudentListComponent implements OnInit {
   constructor(private studentService: StudentService, private alertify: AlertifyService) { }
 
   ngOnInit() {
-    this.loadStudents();
+    interval(1000).subscribe(
+      () => {
+        this.loadStudents();
+      })
   }
 
   loadStudents() {
