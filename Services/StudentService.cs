@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DataEnteringQuality.Entities;
 using DataEnteringQuality.Helpers;
+using GemBox.Spreadsheet;
 
 namespace DataEnteringQuality.Services
 {
@@ -31,7 +33,23 @@ namespace DataEnteringQuality.Services
             _context.Students.Add(student);
             await _context.SaveChangesAsync();
 
+            CreateResultFile(student);
+
             return student;
+        }
+
+        private void CreateResultFile(Student student)
+        {
+            string dirPath = "." + Path.DirectorySeparatorChar + "Wyniki" + Path.DirectorySeparatorChar + student.Class;
+            string resultsPath = dirPath + Path.DirectorySeparatorChar + student.Surname + "_" + student.StudentNumber + ".xlsx";
+
+            if (!Directory.Exists(dirPath))
+                Directory.CreateDirectory(dirPath);
+
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+            var workbook = new ExcelFile();
+            var worksheet = workbook.Worksheets.Add(student.Surname + student.StudentNumber);
+            workbook.Save(resultsPath);
         }
     }
 }
