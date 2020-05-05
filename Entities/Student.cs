@@ -9,6 +9,5 @@ namespace DataEnteringQuality.Entities
         public string Surname { get; set; }
         public int StudentNumber { get; set; }
         public string Class { get; set; }
-        public bool Done { get; set; } = false;
     }
 }

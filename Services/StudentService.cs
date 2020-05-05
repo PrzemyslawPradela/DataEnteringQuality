@@ -42,11 +42,26 @@ namespace DataEnteringQuality.Services
         {
             string dirPath = "." + Path.DirectorySeparatorChar + "Wyniki" + Path.DirectorySeparatorChar + student.Class;
             string resultsPath = dirPath + Path.DirectorySeparatorChar + student.Surname + "_" + student.StudentNumber + ".xlsx";
+            string groupResultsPath = dirPath + Path.DirectorySeparatorChar + student.Class + ".xlsx";
 
             if (!Directory.Exists(dirPath))
                 Directory.CreateDirectory(dirPath);
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+
+            if (File.Exists(groupResultsPath))
+            {
+                var groupWorkbook = ExcelFile.Load(groupResultsPath);
+                var studentWorksheet = groupWorkbook.Worksheets.Add(student.Surname + student.StudentNumber);
+                groupWorkbook.Save(groupResultsPath);
+            }
+            else
+            {
+                var groupWorkbook = new ExcelFile();
+                var studentWorksheet = groupWorkbook.Worksheets.Add(student.Surname + student.StudentNumber);
+                groupWorkbook.Save(groupResultsPath);
+            }
+
             var workbook = new ExcelFile();
             var worksheet = workbook.Worksheets.Add(student.Surname + student.StudentNumber);
             workbook.Save(resultsPath);

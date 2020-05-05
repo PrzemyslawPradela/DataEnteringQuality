@@ -4,5 +4,4 @@ export class Student {
     surname: string;
     studentNumber: number;
     class: string;
-    done: boolean;
 }
