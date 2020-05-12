@@ -1,0 +1,12 @@
+.container{
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around
+}
+
+.card{
+    float: right;
+    width: 40%;
+    text-align: center;
+}

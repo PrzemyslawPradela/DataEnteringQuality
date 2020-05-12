@@ -17,7 +17,7 @@ namespace DataEnteringQuality.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Authenticate([FromBody]AuthenticateModel model)
+        public async Task<IActionResult> Authenticate([FromBody] AuthenticateModel model)
         {
             var user = await _authService.Authenticate(model.Username, model.Password);
 
@@ -26,6 +26,5 @@ namespace DataEnteringQuality.Controllers
 
             return Ok(user);
         }
-
     }
 }
