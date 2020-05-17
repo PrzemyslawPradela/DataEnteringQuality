@@ -10,13 +10,13 @@ import { StudentService } from 'src/app/_services/student.service';
 })
 export class ExercisesListComponent implements OnInit {
 
-  constructor(public studentService: StudentService, public alertifyService: AlertifyService, public router: Router) { }
+  constructor(private studentService: StudentService, private alertifyService: AlertifyService, private router: Router) { }
 
   ngOnInit() {
   }
 
   isStudent() {
-    const currentStudent = this.studentService.currentStudentValue;
+    const currentStudent = this.studentService.isStudent();
     if (currentStudent) {
       return true;
     } else {
@@ -26,7 +26,7 @@ export class ExercisesListComponent implements OnInit {
 
   navigateToEnteringSettings() {
     if (this.isStudent()) {
-      this.router.navigate['/zadania/wprowadzanie/ustawienia'];
+      this.router.navigate(['/zadania/wprowadzanie/ustawienia']);
     } else {
       this.alertifyService.error('Musisz dołączyć do sesji jako student, aby móc wykonać badanie');
     }
@@ -34,7 +34,7 @@ export class ExercisesListComponent implements OnInit {
 
   navigateToPointingSettings() {
     if (this.isStudent()) {
-      this.router.navigate['/zadania/wskazywanie/ustawienia'];
+      this.router.navigate(['/zadania/wskazywanie/ustawienia']);
     } else {
       this.alertifyService.error('Musisz dołączyć do sesji jako student, aby móc wykonać badanie');
     }
@@ -42,7 +42,7 @@ export class ExercisesListComponent implements OnInit {
 
   navigateToSlideringSettings() {
     if (this.isStudent()) {
-      this.router.navigate['/zadania/przeciaganie/ustawienia'];
+      this.router.navigate(['/zadania/przeciaganie/ustawienia']);
     } else {
       this.alertifyService.error('Musisz dołączyć do sesji jako student, aby móc wykonać badanie');
     }
