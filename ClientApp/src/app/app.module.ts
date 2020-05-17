@@ -4,6 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { EnteringSettingsComponent } from './exercises/entering/entering-settings/entering-settings.component';
+import { EnteringTestComponent } from './exercises/entering/entering-test/entering-test.component';
+import { ExercisesListComponent } from './exercises/exercises-list/exercises-list.component';
+import { PointingSettingsComponent } from './exercises/pointing/pointing-settings/pointing-settings.component';
+import { SlideringSettingsComponent } from './exercises/slidering/slidering-settings/slidering-settings.component';
+import { SlideringTestComponent } from './exercises/slidering/slidering-test/slidering-test.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -24,7 +30,8 @@ import { StudentService } from './_services/student.service';
     HomeComponent,
     StudentListComponent,
     StudentRegisterComponent,
-    LoginComponent
+    LoginComponent,
+    ExercisesListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -33,12 +40,19 @@ import { StudentService } from './_services/student.service';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'home', component: HomeComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: StudentRegisterComponent },
       { path: 'students', component: StudentListComponent, canActivate: [AuthGuard] },
+      { path: 'zadania', component: ExercisesListComponent },
+      { path: 'zadania/wprowadzanie/ustawienia', component: EnteringSettingsComponent },
+      { path: 'zadania/wprowadzanie/test', component: EnteringTestComponent },
+      { path: 'zadania/wskazywanie/ustawienia', component: PointingSettingsComponent },
+      { path: 'zadania/wskazywanie/test', component: PointingSettingsComponent },
+      { path: 'zadania/przeciaganie/ustawienia', component: SlideringSettingsComponent },
+      { path: 'zadania/przeciaganie/test', component: SlideringTestComponent },
 
-      { path: '**', redirectTo: '' }
+      { path: '**', redirectTo: 'home' }
     ])
   ],
   providers: [

@@ -23,7 +23,7 @@ export class StudentRegisterComponent implements OnInit {
   register() {
     this.studentService.register(this.student).subscribe(
       () => {
-        this.router.navigate(['']);
+        this.router.navigate(['/zadania']);
       },
       error => {
         this.alertify.error(error);
