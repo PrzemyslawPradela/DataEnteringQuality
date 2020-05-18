@@ -8,6 +8,8 @@ import { EnteringSettingsComponent } from './exercises/entering/entering-setting
 import { EnteringTestComponent } from './exercises/entering/entering-test/entering-test.component';
 import { ExercisesListComponent } from './exercises/exercises-list/exercises-list.component';
 import { PointingSettingsComponent } from './exercises/pointing/pointing-settings/pointing-settings.component';
+import { PointingTestComponent } from './exercises/pointing/pointing-test/pointing-test.component';
+import { SlideringResultComponent } from './exercises/slidering/slidering-result/slidering-result.component';
 import { SlideringSettingsComponent } from './exercises/slidering/slidering-settings/slidering-settings.component';
 import { SlideringTestComponent } from './exercises/slidering/slidering-test/slidering-test.component';
 import { HomeComponent } from './home/home.component';
@@ -20,6 +22,7 @@ import { BasicAuthInterceptor } from './_helpers/basic-auth.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AlertifyService } from './_services/alertify.service';
 import { AuthService } from './_services/auth.service';
+import { SlideringService } from './_services/slidering.service';
 import { StudentService } from './_services/student.service';
 
 
@@ -31,12 +34,16 @@ import { StudentService } from './_services/student.service';
     StudentListComponent,
     StudentRegisterComponent,
     LoginComponent,
-    ExercisesListComponent
+    ExercisesListComponent,
+    EnteringTestComponent,
+    PointingSettingsComponent,
+    PointingTestComponent,
+    SlideringSettingsComponent,
+    SlideringTestComponent,
+    SlideringResultComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FormsModule,
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
@@ -51,6 +58,7 @@ import { StudentService } from './_services/student.service';
       { path: 'zadania/wskazywanie/test', component: PointingSettingsComponent },
       { path: 'zadania/przeciaganie/ustawienia', component: SlideringSettingsComponent },
       { path: 'zadania/przeciaganie/test', component: SlideringTestComponent },
+      { path: 'zadania/przeciaganie/wynik', component: SlideringResultComponent },
 
       { path: '**', redirectTo: 'home' }
     ])
@@ -59,6 +67,7 @@ import { StudentService } from './_services/student.service';
     AlertifyService,
     AuthService,
     StudentService,
+    SlideringService,
     AuthGuard,
 
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

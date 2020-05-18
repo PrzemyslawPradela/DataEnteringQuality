@@ -2,10 +2,11 @@
   <div class="card mb3">
     <h4 class="card-header">Test przeciągania - ustawienia</h4>
     <div class="card-body">
-      <form>
+      <form #settingsForm="ngForm" (ngSubmit)="setSlideringSettings()">
         <div class="form-group">
           <label for="numOfAttempts">Liczba prób</label>
-          <select class="form-control" id="numOfAttempts" required>
+          <select class="form-control" id="numOfAttempts" name="numOfAttempts"
+            [(ngModel)]="slideringSettings.numOfAttempts" required>
             <option>1</option>
             <option>2</option>
             <option>3</option>
@@ -32,18 +33,21 @@
           <label>Wartości do ustawiania losowane z zakresu:</label>
           <div class="form-row">
             <div class="col-3">
-              <input type="number" min="1" max="100" step="1" class="form-control" placeholder="od" id="numbersFrom">
+              <input type="number" min="1" max="100" step="1" class="form-control" id="numbersFrom" name="numbersFrom"
+                [(ngModel)]="slideringSettings.numbersFrom" required>
             </div>
             <div class="col-3">
-              <input type="number" min="1" max="100" step="1" class="form-control" placeholder="do" id="numbersTo">
+              <input type="number" min="1" max="100" step="1" class="form-control" id="numbersTo" name="numbersTo"
+                [(ngModel)]="slideringSettings.numbersTo" required>
             </div>
           </div>
         </div>
         <div class="form-group">
           <label for="time">Czas na wykonanie zadania [s]</label>
-          <input type="number" min="5" max="60" step="1" name="time" class="form-control" required />
+          <input type="number" min="5" max="60" step="1" id="time" name="time" class="form-control"
+            [(ngModel)]="slideringSettings.time" required />
         </div>
-        <button [disabled]="!registerForm.valid" class="btn btn-primary">
+        <button class="btn btn-primary" [disabled]="!settingsForm.valid">
           Rozpocznij badanie
         </button>
       </form>

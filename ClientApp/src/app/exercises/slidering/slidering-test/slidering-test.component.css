@@ -1,0 +1,12 @@
+.card {
+    width: 45%;
+    text-align: center;
+}
+
+.card-left {
+    float: left;
+}
+
+.card-right {
+    float: right;
+}

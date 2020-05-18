@@ -1,3 +1,35 @@
-<p>
-  slidering-test works!
-</p>
+<div class="container mt-5">
+    <div class="card mb-3 card-left">
+        <h3 class="card-header">Wartości do ustawienia</h3>
+        <ul class="list-group list-group-flush" *ngFor="let num of valuesToSet; let i=index">
+            <li class="list-group-item">
+                <strong>{{valuesToSet[i]}}</strong>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card mb-3 card-right">
+        <h3 class="card-header text-danger">
+            {{timeLeft}}
+            <div class="progress">
+                <div class="progress-bar progress-bar bg-danger" role="progressbar" attr.aria-valuenow="{{timeLeft}}"
+                    aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width': timeLeft/testSettings.time*100+'%'}">
+                </div>
+            </div>
+        </h3>
+        <div class="card-body">
+            <form #testForm="ngForm" (ngSubmit)="sendResult()">
+                <div *ngFor="let num of valuesToSet; let i=index">
+                    <div class=" form-group">
+                        <label>{{valuesFromTest[i]}}</label>
+                        <input type="range" min="1" max="100" step="1" class="custom-range"
+                            [(ngModel)]="valuesFromTest[i]" name="{{i}}" required>
+                    </div>
+                </div>
+                <button class="btn btn-primary" [disabled]="!testForm.valid">
+                    <i class="fas fa-check fa-lg"></i> Zatwierdź
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
