@@ -8,6 +8,7 @@ import { User } from '../_models/user';
   providedIn: 'root'
 })
 export class AuthService {
+
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 

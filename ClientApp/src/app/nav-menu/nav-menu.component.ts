@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
+import { StudentService } from '../_services/student.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -8,7 +9,7 @@ import { AuthService } from '../_services/auth.service';
 })
 export class NavMenuComponent {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, public studentService: StudentService) { }
 
   loggedIn() {
     const currentUser = this.authService.currentUserValue;
@@ -18,4 +19,14 @@ export class NavMenuComponent {
       return false;
     }
   }
+
+  isStudent() {
+    const currentStudent = this.studentService.currentStudentValue;
+    if (currentStudent) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Student } from '../_models/student';
 
@@ -9,11 +9,16 @@ import { Student } from '../_models/student';
 })
 export class StudentService {
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
+  private currentStudentSubject: BehaviorSubject<Student>;
+  public currentStudent: Observable<Student>;
 
-  isStudent() {
-    const currentStudent = localStorage.getItem('currentStudent');
-    return currentStudent
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+    this.currentStudentSubject = new BehaviorSubject<Student>(JSON.parse(localStorage.getItem('currentStudent')));
+    this.currentStudent = this.currentStudentSubject.asObservable();
+  }
+
+  public get currentStudentValue(): Student {
+    return this.currentStudentSubject.value;
   }
 
   getStudents(): Observable<Student[]> {

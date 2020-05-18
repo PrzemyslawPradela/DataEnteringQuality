@@ -15,15 +15,6 @@ export class ExercisesListComponent implements OnInit {
   ngOnInit() {
   }
 
-  isStudent() {
-    const currentStudent = this.studentService.isStudent();
-    if (currentStudent) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   navigateToEnteringSettings() {
     if (this.isStudent()) {
       this.router.navigate(['/zadania/wprowadzanie/ustawienia']);
@@ -45,6 +36,15 @@ export class ExercisesListComponent implements OnInit {
       this.router.navigate(['/zadania/przeciaganie/ustawienia']);
     } else {
       this.alertifyService.error('Musisz dołączyć do sesji jako student, aby móc wykonać badanie');
+    }
+  }
+
+  private isStudent() {
+    const currentStudent = this.studentService.currentStudentValue;
+    if (currentStudent) {
+      return true;
+    } else {
+      return false;
     }
   }
 
