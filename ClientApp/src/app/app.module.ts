@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { EnteringSettingsComponent } from './exercises/entering/entering-settings/entering-settings.component';
 import { EnteringTestComponent } from './exercises/entering/entering-test/entering-test.component';
 import { ExercisesListComponent } from './exercises/exercises-list/exercises-list.component';
+import { PointingResultComponent } from './exercises/pointing/pointing-result/pointing-result.component';
 import { PointingSettingsComponent } from './exercises/pointing/pointing-settings/pointing-settings.component';
 import { PointingTestComponent } from './exercises/pointing/pointing-test/pointing-test.component';
 import { SlideringResultComponent } from './exercises/slidering/slidering-result/slidering-result.component';
@@ -22,6 +23,7 @@ import { BasicAuthInterceptor } from './_helpers/basic-auth.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AlertifyService } from './_services/alertify.service';
 import { AuthService } from './_services/auth.service';
+import { PointingService } from './_services/pointing.service';
 import { SlideringService } from './_services/slidering.service';
 import { StudentService } from './_services/student.service';
 
@@ -38,6 +40,7 @@ import { StudentService } from './_services/student.service';
     EnteringTestComponent,
     PointingSettingsComponent,
     PointingTestComponent,
+    PointingResultComponent,
     SlideringSettingsComponent,
     SlideringTestComponent,
     SlideringResultComponent
@@ -55,7 +58,8 @@ import { StudentService } from './_services/student.service';
       { path: 'zadania/wprowadzanie/ustawienia', component: EnteringSettingsComponent },
       { path: 'zadania/wprowadzanie/test', component: EnteringTestComponent },
       { path: 'zadania/wskazywanie/ustawienia', component: PointingSettingsComponent },
-      { path: 'zadania/wskazywanie/test', component: PointingSettingsComponent },
+      { path: 'zadania/wskazywanie/test', component: PointingTestComponent },
+      { path: 'zadania/wskazywanie/wynik', component: PointingResultComponent },
       { path: 'zadania/przeciaganie/ustawienia', component: SlideringSettingsComponent },
       { path: 'zadania/przeciaganie/test', component: SlideringTestComponent },
       { path: 'zadania/przeciaganie/wynik', component: SlideringResultComponent },
@@ -68,6 +72,7 @@ import { StudentService } from './_services/student.service';
     AuthService,
     StudentService,
     SlideringService,
+    PointingService,
     AuthGuard,
 
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
