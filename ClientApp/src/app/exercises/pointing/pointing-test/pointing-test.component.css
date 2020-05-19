@@ -1,0 +1,23 @@
+.pointing-div {
+    width: 1000px;
+    height: 600px;
+    border-style: solid;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.my-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.container {
+    width: 30%;
+    text-align: center;
+}
+
+.divider {
+    height: auto;
+}

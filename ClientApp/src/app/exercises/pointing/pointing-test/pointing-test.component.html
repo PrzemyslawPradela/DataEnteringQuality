@@ -1,3 +1,22 @@
-<p>
-  pointing-test works!
-</p>
+<div class="container mt-5">
+  <h3 class="card-header text-danger">
+    {{timeLeft}}
+    <div class="progress">
+      <div class="progress-bar progress-bar bg-danger" role="progressbar" attr.aria-valuenow="{{timeLeft}}"
+        aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width': timeLeft/testSettings.time*100+'%'}">
+      </div>
+    </div>
+  </h3>
+</div>
+
+<div class="my-container mb-5">
+  <div class="pointing-div" (click)="missClick()">
+    <button type="button" class="btn btn-primary" [disabled]="btnClickArray[0]"
+      (click)="btnClick(); btnClickArray[0]=true;" [ngStyle]="{'width': btnWidth+'px'}">
+    </button>
+    <div class="divider" [ngStyle]="{'width': btnDistance+'px'}"></div>
+    <button type="button" class="btn btn-primary" [disabled]="btnClickArray[1]"
+      (click)="btnClick(); btnClickArray[1]=true;" [ngStyle]="{'width': btnWidth+'px'}">
+    </button>
+  </div>
+</div>
