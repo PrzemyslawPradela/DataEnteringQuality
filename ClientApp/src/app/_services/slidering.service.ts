@@ -12,7 +12,6 @@ export class SlideringService {
   private slideringResult: SlideringResult;
 
   constructor() {
-    this.values = [];
     this.slideringResult = new SlideringResult();
   }
 
@@ -25,6 +24,7 @@ export class SlideringService {
   }
 
   getSlideringTest() {
+    this.values = [];
     for (let index = 0; index < this.slideringSettings.numOfAttempts; index++) {
       const number = this.randomNumber(this.slideringSettings.numbersFrom, this.slideringSettings.numbersTo);
       this.values.push(number);
@@ -34,6 +34,7 @@ export class SlideringService {
   }
 
   setSlideringResult(valuesFromTest: number[]) {
+    this.slideringResult.numOfMistakes = 0;
     for (let index = 0; index < this.values.length; index++) {
       if (valuesFromTest[index] == 0) {
         this.slideringResult.numOfMistakes++;
