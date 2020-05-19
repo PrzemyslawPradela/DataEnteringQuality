@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Student } from 'src/app/_models/student';
 import { AlertifyService } from 'src/app/_services/alertify.service';
+import { AuthService } from 'src/app/_services/auth.service';
 import { StudentService } from 'src/app/_services/student.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class StudentRegisterComponent implements OnInit {
 
   student: Student;
 
-  constructor(private studentService: StudentService, private alertify: AlertifyService, private router: Router) {
+  constructor(private studentService: StudentService, private authService: AuthService, private alertify: AlertifyService, private router: Router) {
     this.student = new Student();
   }
 

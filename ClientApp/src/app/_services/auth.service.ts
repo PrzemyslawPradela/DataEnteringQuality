@@ -25,7 +25,7 @@ export class AuthService {
     return this.http.post<any>(this.baseUrl + 'api/auth', { username, password })
       .pipe(map(user => {
         user.authdata = window.btoa(username + ':' + password);
-        localStorage.removeItem('currentStudent');
+        localStorage.removeItem('currenStudent');
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
         return user;
