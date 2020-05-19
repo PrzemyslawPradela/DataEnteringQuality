@@ -16,7 +16,7 @@ export class SlideringTestComponent implements OnInit {
   timeLeft: number;
   interval: NodeJS.Timeout;
 
-  constructor(private slideringService: SlideringService, private rouer: Router) {
+  constructor(private slideringService: SlideringService, private router: Router) {
     this.testSettings = slideringService.testSettings;
     this.valuesFromTest = [this.testSettings.numOfAttempts].fill(0);
     this.timeLeft = this.testSettings.time;
@@ -31,7 +31,7 @@ export class SlideringTestComponent implements OnInit {
   sendResult() {
     this.pauseTimer();
     this.slideringService.setSlideringResult(this.valuesFromTest);
-    this.rouer.navigate(['/zadania/przeciaganie/wynik']);
+    this.router.navigate(['/zadania/przeciaganie/wynik']);
   }
 
   private startTimer() {
@@ -41,7 +41,7 @@ export class SlideringTestComponent implements OnInit {
       } else {
         this.pauseTimer();
         this.slideringService.setSlideringResult(this.valuesFromTest);
-        this.rouer.navigate(['/zadania/przeciaganie/wynik']);
+        this.router.navigate(['/zadania/przeciaganie/wynik']);
       }
     }, 1000)
   }
