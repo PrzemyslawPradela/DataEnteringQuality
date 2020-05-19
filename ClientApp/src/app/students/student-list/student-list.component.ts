@@ -16,7 +16,7 @@ export class StudentListComponent implements OnInit {
   constructor(private studentService: StudentService, private alertify: AlertifyService) { }
 
   ngOnInit() {
-    interval(1000).subscribe(
+    interval(100).subscribe(
       () => {
         this.loadStudents();
       })
