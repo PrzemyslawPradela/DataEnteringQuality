@@ -1,6 +1,9 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
 import { PointingResult } from '../_models/pointing-result';
 import { PointingSettings } from '../_models/pointing-settings';
+import { PointingSettingsFile } from '../_models/pointing-settings-file';
+import { Student } from '../_models/student';
 
 @Injectable({
   providedIn: 'root'
@@ -8,15 +11,30 @@ import { PointingSettings } from '../_models/pointing-settings';
 export class PointingService {
 
   private pointingSettings: PointingSettings;
+  private pointingSettingsFile: PointingSettingsFile;
   private pointingResult: PointingResult;
+  private student: Student;
+  private numOfTest: number;
 
-  constructor() {
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
     this.pointingSettings = new PointingSettings();
+    this.pointingSettingsFile = new PointingSettingsFile();
     this.pointingResult = new PointingResult();
+    this.student = JSON.parse(localStorage.getItem('currentStudent'));
+    this.numOfTest = 0;
   }
 
   setPointingSettings(pointingSettings: PointingSettings) {
+    this.numOfTest++;
+    pointingSettings.numOfTest = this.numOfTest;
     this.pointingSettings = pointingSettings;
+  }
+
+  savePointingSettings() {
+    this.pointingSettingsFile.numOfTest = this.numOfTest;
+    this.pointingSettingsFile.numOfAttempts = this.pointingSettings.numOfAttempts;
+    this.pointingSettingsFile.time = this.pointingSettings.time;
+    return this.http.post(this.baseUrl + 'api/exercises/pointing/' + this.student.id + "/settings", this.pointingSettingsFile);
   }
 
   getPointingTest() {
@@ -35,8 +53,11 @@ export class PointingService {
   }
 
   setPointingResult(numOfMissClick: number, attemptsLetf: number) {
+    this.pointingResult.numOfTest = this.numOfTest;
     this.pointingResult.numOfMissClick = numOfMissClick;
     this.pointingResult.attemptsLeft = attemptsLetf;
+    this.pointingResult.btnWidth = this.pointingSettings.btnWidth;
+    this.pointingResult.btnDistance = this.pointingSettings.btnDistance;
 
     for (let index = 0; index < this.pointingSettings.numOfAttempts; index++) {
       const d = this.pointingSettings.btnDistance[index];
@@ -44,6 +65,8 @@ export class PointingService {
       const id = Math.log2(d + w / w);
       this.pointingResult.ids[index] = id;
     }
+
+    return this.http.post(this.baseUrl + 'api/exercises/pointing/' + this.student.id + "/result", this.pointingResult);
   }
 
   getPointingResult() {

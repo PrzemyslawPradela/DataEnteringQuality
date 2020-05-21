@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { interval } from 'rxjs';
 import { PointingSettings } from 'src/app/_models/pointing-settings';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 import { PointingService } from 'src/app/_services/pointing.service';
 
 @Component({
@@ -23,7 +24,7 @@ export class PointingTestComponent implements OnInit {
   timeLeft: number;
   interval: NodeJS.Timeout;
 
-  constructor(private pointingService: PointingService, private router: Router) {
+  constructor(private pointingService: PointingService, private router: Router, private alertify: AlertifyService) {
     this.testSettings = pointingService.getPointingTest();
     this.btnClickCount = 2;
     this.btnClickArray = [false, false];
@@ -56,8 +57,7 @@ export class PointingTestComponent implements OnInit {
     }
 
     if (this.numOfAttempts == 0) {
-      this.pointingService.setPointingResult(this.missClickCount, this.numOfAttempts);
-      this.router.navigate(['/zadania/wskazywanie/wynik']);
+      this.sendResult();
     }
 
     console.log('btnClick: ' + this.btnClickCount);
@@ -80,8 +80,13 @@ export class PointingTestComponent implements OnInit {
 
   sendResult() {
     this.pauseTimer();
-    this.pointingService.setPointingResult(this.missClickCount, this.numOfAttempts);
-    this.router.navigate(['/zadania/wskazywanie/wynik']);
+    this.pointingService.setPointingResult(this.missClickCount, this.numOfAttempts).subscribe(
+      () => {
+        this.router.navigate(['/zadania']);
+      },
+      error => {
+        this.alertify.error(error);
+      });
   }
 
   private startTimer() {
@@ -90,8 +95,7 @@ export class PointingTestComponent implements OnInit {
         this.timeLeft--;
       } else {
         this.pauseTimer();
-        this.pointingService.setPointingResult(this.missClickCount, this.numOfAttempts);
-        this.router.navigate(['/zadania/wskazywanie/wynik']);
+        this.sendResult();
       }
     }, 1000)
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PointingSettings } from 'src/app/_models/pointing-settings';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 import { PointingService } from 'src/app/_services/pointing.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class PointingSettingsComponent implements OnInit {
 
   pointingSettings: PointingSettings;
 
-  constructor(private pointingService: PointingService, private router: Router) {
+  constructor(private pointingService: PointingService, private router: Router, private alertify: AlertifyService) {
     this.pointingSettings = new PointingSettings();
   }
 
@@ -22,7 +23,13 @@ export class PointingSettingsComponent implements OnInit {
 
   setPointingSettings() {
     this.pointingService.setPointingSettings(this.pointingSettings);
-    this.router.navigate(['/zadania/wskazywanie/test']);
+    this.pointingService.savePointingSettings().subscribe(
+      () => {
+        this.router.navigate(['/zadania/wskazywanie/test']);
+      },
+      error => {
+        this.alertify.error(error);
+      });
   }
 
 }

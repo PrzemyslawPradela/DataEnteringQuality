@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { EnteringSettingsComponent } from './exercises/entering/entering-settings/entering-settings.component';
 import { EnteringTestComponent } from './exercises/entering/entering-test/entering-test.component';
 import { ExercisesListComponent } from './exercises/exercises-list/exercises-list.component';
-import { PointingResultComponent } from './exercises/pointing/pointing-result/pointing-result.component';
 import { PointingSettingsComponent } from './exercises/pointing/pointing-settings/pointing-settings.component';
 import { PointingTestComponent } from './exercises/pointing/pointing-test/pointing-test.component';
 import { SlideringSettingsComponent } from './exercises/slidering/slidering-settings/slidering-settings.component';
@@ -39,7 +38,6 @@ import { StudentService } from './_services/student.service';
     EnteringTestComponent,
     PointingSettingsComponent,
     PointingTestComponent,
-    PointingResultComponent,
     SlideringSettingsComponent,
     SlideringTestComponent
   ],
@@ -57,7 +55,6 @@ import { StudentService } from './_services/student.service';
       { path: 'zadania/wprowadzanie/test', component: EnteringTestComponent },
       { path: 'zadania/wskazywanie/ustawienia', component: PointingSettingsComponent },
       { path: 'zadania/wskazywanie/test', component: PointingTestComponent },
-      { path: 'zadania/wskazywanie/wynik', component: PointingResultComponent },
       { path: 'zadania/przeciaganie/ustawienia', component: SlideringSettingsComponent },
       { path: 'zadania/przeciaganie/test', component: SlideringTestComponent },
 
