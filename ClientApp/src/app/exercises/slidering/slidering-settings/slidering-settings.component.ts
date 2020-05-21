@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SlideringSettings } from 'src/app/_models/slidering-settings';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 import { SlideringService } from 'src/app/_services/slidering.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class SlideringSettingsComponent implements OnInit {
 
   slideringSettings: SlideringSettings;
 
-  constructor(private slideringService: SlideringService, private router: Router) {
+  constructor(private slideringService: SlideringService, private router: Router, private alertify: AlertifyService) {
     this.slideringSettings = new SlideringSettings();
   }
 
@@ -24,7 +25,13 @@ export class SlideringSettingsComponent implements OnInit {
 
   setSlideringSettings() {
     this.slideringService.setSlideringSettings(this.slideringSettings);
-    this.router.navigate(['/zadania/przeciaganie/test']);
+    this.slideringService.saveSlideringSettings().subscribe(
+      () => {
+        this.router.navigate(['/zadania/przeciaganie/test']);
+      },
+      error => {
+        this.alertify.error(error);
+      });
   }
 
 }

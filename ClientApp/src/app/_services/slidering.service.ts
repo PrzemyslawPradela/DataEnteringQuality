@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
 import { SlideringResult } from '../_models/slidering-result';
 import { SlideringSettings } from '../_models/slidering-settings';
+import { Student } from '../_models/student';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +12,14 @@ export class SlideringService {
   private slideringSettings: SlideringSettings;
   private values: number[];
   private slideringResult: SlideringResult;
+  private student: Student;
+  private numOfTest: number;
 
-  constructor() {
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+    this.slideringSettings = new SlideringSettings();
     this.slideringResult = new SlideringResult();
+    this.student = JSON.parse(localStorage.getItem('currentStudent'));
+    this.numOfTest = 0;
   }
 
   public get testSettings(): SlideringSettings {
@@ -20,7 +27,13 @@ export class SlideringService {
   }
 
   setSlideringSettings(slideringSettings: SlideringSettings) {
+    this.numOfTest++;
+    slideringSettings.numOfTest = this.numOfTest;
     this.slideringSettings = slideringSettings;
+  }
+
+  saveSlideringSettings() {
+    return this.http.post(this.baseUrl + 'api/exercises/slidering/' + this.student.id + "/settings", this.slideringSettings);
   }
 
   getSlideringTest() {
@@ -34,20 +47,20 @@ export class SlideringService {
   }
 
   setSlideringResult(valuesFromTest: number[]) {
+    this.slideringResult.numOfTest = this.numOfTest;
+    this.slideringResult.numOfAttempts = this.slideringSettings.numOfAttempts;
+    this.slideringResult.valuesToSet = this.values;
+    this.slideringResult.valuesFromTest = valuesFromTest;
     this.slideringResult.numOfMistakes = 0;
     for (let index = 0; index < this.values.length; index++) {
-      if (valuesFromTest[index] == 0) {
-        this.slideringResult.numOfMistakes++;
-      } else if (valuesFromTest[index] != this.values[index]) {
+      if (valuesFromTest[index] != this.values[index]) {
         this.slideringResult.numOfMistakes++;
       }
       const result = valuesFromTest[index] - this.values[index];
       this.slideringResult.valuesAccuracy[index] = Math.abs(result);
     }
-  }
 
-  getSlideringResult() {
-    return this.slideringResult;
+    return this.http.post(this.baseUrl + 'api/exercises/slidering/' + this.student.id + "/result", this.slideringResult);
   }
 
   private randomNumber(min: number, max: number) {

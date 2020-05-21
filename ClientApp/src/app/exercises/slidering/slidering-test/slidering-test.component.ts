@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SlideringSettings } from 'src/app/_models/slidering-settings';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 import { SlideringService } from 'src/app/_services/slidering.service';
 
 @Component({
@@ -16,22 +17,28 @@ export class SlideringTestComponent implements OnInit {
   timeLeft: number;
   interval: NodeJS.Timeout;
 
-  constructor(private slideringService: SlideringService, private router: Router) {
+  constructor(private slideringService: SlideringService, private router: Router, private alertify: AlertifyService) {
     this.testSettings = slideringService.testSettings;
-    this.valuesFromTest = [this.testSettings.numOfAttempts].fill(0);
+    this.valuesFromTest = [];
     this.timeLeft = this.testSettings.time;
   }
 
   ngOnInit() {
     this.valuesToSet = this.slideringService.getSlideringTest();
+    this.fillValuesFromTestWithZero();
 
     this.startTimer();
   }
 
   sendResult() {
     this.pauseTimer();
-    this.slideringService.setSlideringResult(this.valuesFromTest);
-    this.router.navigate(['/zadania/przeciaganie/wynik']);
+    this.slideringService.setSlideringResult(this.valuesFromTest).subscribe(
+      () => {
+        this.router.navigate(['/zadania']);
+      },
+      error => {
+        this.alertify.error(error);
+      });
   }
 
   private startTimer() {
@@ -40,14 +47,25 @@ export class SlideringTestComponent implements OnInit {
         this.timeLeft--;
       } else {
         this.pauseTimer();
-        this.slideringService.setSlideringResult(this.valuesFromTest);
-        this.router.navigate(['/zadania/przeciaganie/wynik']);
+        this.slideringService.setSlideringResult(this.valuesFromTest).subscribe(
+          () => {
+            this.router.navigate(['/zadania']);
+          },
+          error => {
+            this.alertify.error(error);
+          });
       }
     }, 1000)
   }
 
   private pauseTimer() {
     clearInterval(this.interval);
+  }
+
+  private fillValuesFromTestWithZero() {
+    for (let index = 0; index < this.testSettings.numOfAttempts; index++) {
+      this.valuesFromTest[index] = 0;
+    }
   }
 
 }

@@ -10,7 +10,6 @@ import { ExercisesListComponent } from './exercises/exercises-list/exercises-lis
 import { PointingResultComponent } from './exercises/pointing/pointing-result/pointing-result.component';
 import { PointingSettingsComponent } from './exercises/pointing/pointing-settings/pointing-settings.component';
 import { PointingTestComponent } from './exercises/pointing/pointing-test/pointing-test.component';
-import { SlideringResultComponent } from './exercises/slidering/slidering-result/slidering-result.component';
 import { SlideringSettingsComponent } from './exercises/slidering/slidering-settings/slidering-settings.component';
 import { SlideringTestComponent } from './exercises/slidering/slidering-test/slidering-test.component';
 import { HomeComponent } from './home/home.component';
@@ -42,8 +41,7 @@ import { StudentService } from './_services/student.service';
     PointingTestComponent,
     PointingResultComponent,
     SlideringSettingsComponent,
-    SlideringTestComponent,
-    SlideringResultComponent
+    SlideringTestComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -62,7 +60,6 @@ import { StudentService } from './_services/student.service';
       { path: 'zadania/wskazywanie/wynik', component: PointingResultComponent },
       { path: 'zadania/przeciaganie/ustawienia', component: SlideringSettingsComponent },
       { path: 'zadania/przeciaganie/test', component: SlideringTestComponent },
-      { path: 'zadania/przeciaganie/wynik', component: SlideringResultComponent },
 
       { path: '**', redirectTo: 'home' }
     ])

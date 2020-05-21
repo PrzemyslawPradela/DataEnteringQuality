@@ -8,5 +8,6 @@ namespace DataEnteringQuality.Services
     {
         Task<IEnumerable<Student>> GetAll();
         Task<Student> RegisterStudent(Student student);
+        Task<Student> GetStudentById(string studentId);
     }
 }
