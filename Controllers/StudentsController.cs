@@ -27,7 +27,7 @@ namespace DataEnteringQuality.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody]StudentRegisterModel model)
+        public async Task<IActionResult> Register(StudentRegisterModel model)
         {
             var student = _mapper.Map<Student>(model);
 
