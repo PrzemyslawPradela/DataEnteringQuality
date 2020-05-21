@@ -23,6 +23,11 @@ namespace DataEnteringQuality.Services
             return await Task.Run(() => _context.Students.OrderBy(x => x.Surname));
         }
 
+        public async Task<Student> GetStudentById(string studentId)
+        {
+            return await Task.Run(() => _context.Students.FirstOrDefault(x => x.Id.ToString() == studentId));
+        }
+
         public async Task<Student> RegisterStudent(Student student)
         {
             if (_context.Students.Any(x => x.StudentNumber == student.StudentNumber))
@@ -33,38 +38,37 @@ namespace DataEnteringQuality.Services
             _context.Students.Add(student);
             await _context.SaveChangesAsync();
 
-            //CreateResultFile(student);
+            CreateResultFile(student);
 
             return student;
         }
 
-        // private void CreateResultFile(Student student)
-        // {
-        //     string dirPath = "." + Path.DirectorySeparatorChar + "Wyniki" + Path.DirectorySeparatorChar + student.Class;
-        //     string resultsPath = dirPath + Path.DirectorySeparatorChar + student.Surname + "_" + student.StudentNumber + ".xlsx";
-        //     string groupResultsPath = dirPath + Path.DirectorySeparatorChar + student.Class + ".xlsx";
+        private void CreateResultFile(Student student)
+        {
+            List<string> tests = new List<string>()
+            {
+                "TEST_WPROWADZANIA",
+                "TEST_WSKAZYWANIA",
+                "TEST_PRZECIAGANIA"
+            };
 
-        //     if (!Directory.Exists(dirPath))
-        //         Directory.CreateDirectory(dirPath);
+            string dirPath = "." + Path.DirectorySeparatorChar + "WYNIKI" + Path.DirectorySeparatorChar + student.Class + Path.DirectorySeparatorChar;
+            string resultsPath = Path.DirectorySeparatorChar + student.Surname + "_" + student.StudentNumber + ".xlsx";
 
-        //     SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+            foreach (var item in tests)
+            {
+                Directory.CreateDirectory(dirPath + item);
+            }
 
-        //     if (File.Exists(groupResultsPath))
-        //     {
-        //         var groupWorkbook = ExcelFile.Load(groupResultsPath);
-        //         var studentWorksheet = groupWorkbook.Worksheets.Add(student.Surname + student.StudentNumber);
-        //         groupWorkbook.Save(groupResultsPath);
-        //     }
-        //     else
-        //     {
-        //         var groupWorkbook = new ExcelFile();
-        //         var studentWorksheet = groupWorkbook.Worksheets.Add(student.Surname + student.StudentNumber);
-        //         groupWorkbook.Save(groupResultsPath);
-        //     }
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
-        //     var workbook = new ExcelFile();
-        //     var worksheet = workbook.Worksheets.Add("");
-        //     workbook.Save(resultsPath);
-        // }
+            foreach (var item in tests)
+            {
+                var workbook = new ExcelFile();
+                workbook.Worksheets.Add("WYNIKI");
+                workbook.Worksheets.Add("PARAMETRY");
+                workbook.Save(dirPath + item + resultsPath);
+            }
+        }
     }
 }
