@@ -49,5 +49,21 @@ namespace DataEnteringQuality.Controllers
             await _exerciseService.SavePointingTestResult(model, student);
             return Ok();
         }
+
+        [HttpPost("entering/{id}/settings")]
+        public async Task<IActionResult> SaveEnteringSettings(string id, EnteringSettingsModel model)
+        {
+            var student = await _studentService.GetStudentById(id);
+            var words = await _exerciseService.SaveEnteringTestSettings(model, student);
+            return Ok(words);
+        }
+
+        [HttpPost("entering/{id}/result")]
+        public async Task<IActionResult> SaveEnteringResult(string id, EnteringResultModel model)
+        {
+            var student = await _studentService.GetStudentById(id);
+            await _exerciseService.SaveEnteringTestResult(model, student);
+            return Ok();
+        }
     }
 }

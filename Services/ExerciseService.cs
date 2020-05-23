@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Aspose.Cells;
+using Aspose.Cells.Utility;
 using DataEnteringQuality.Entities;
 using DataEnteringQuality.Models;
 using DataEnteringQuality.Models.JsonModels;
@@ -11,6 +14,131 @@ namespace DataEnteringQuality.Services
 {
     public class ExerciseService : IExerciseService
     {
+        private static readonly Random random = new Random();
+        private static readonly object syncLock = new object();
+
+        public async Task SaveEnteringTestResult(EnteringResultModel result, Student student)
+        {
+            string dirPath = "." + Path.DirectorySeparatorChar + "WYNIKI" + Path.DirectorySeparatorChar + student.Class + Path.DirectorySeparatorChar;
+            string resultsPath = "TEST_WPROWADZANIA" + Path.DirectorySeparatorChar + student.Surname + "_" + student.StudentNumber + ".xlsx";
+
+            Workbook workbook = new Workbook(dirPath + resultsPath);
+            Worksheet worksheet = workbook.Worksheets[0];
+
+            var averageNumOfMistakesInWords = result.AverageNumOfMistakesInWords.ToString();
+
+            if (result.AllWordsEmpty)
+                averageNumOfMistakesInWords = "NIEPRZEPISANO WYRAZÓW";
+
+            var fullResult = new EnteringFullResultJsonModel()
+            {
+                NumOfMistypedWords = result.NumOfMistypedWords,
+                AverageNumOfMistakesInWords = averageNumOfMistakesInWords
+            };
+
+            var results = new List<EnteringFullResultJsonModel>();
+            results.Add(fullResult);
+
+            var jsonResult = new EnteringResultJsonModel()
+            {
+                NumOfTest = result.NumOfTest,
+                Results = results
+            };
+
+            string jsonResultString = JsonConvert.SerializeObject(jsonResult);
+
+            CellsFactory factory = new CellsFactory();
+            var style = factory.CreateStyle();
+            style.HorizontalAlignment = TextAlignmentType.Center;
+            style.Font.Color = System.Drawing.Color.Black;
+            style.Font.IsBold = true;
+
+            JsonLayoutOptions options = new JsonLayoutOptions();
+            options.TitleStyle = style;
+            options.ArrayAsTable = true;
+
+            int row = worksheet.Cells.MaxDataRow;
+            if (row == -1)
+            {
+                row = 0;
+            }
+            else
+            {
+                row += 2;
+            }
+
+            JsonUtility.ImportData(jsonResultString, worksheet.Cells, row, 0, options);
+
+            await Task.Run(() => workbook.Save(dirPath + resultsPath));
+
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+
+            var excelFile = ExcelFile.Load(dirPath + resultsPath);
+            excelFile.Worksheets.Remove(2);
+            await Task.Run(() => excelFile.Save(dirPath + resultsPath));
+        }
+
+        public async Task<string[]> SaveEnteringTestSettings(EnteringSettingsModel settings, Student student)
+        {
+            string dirPath = "." + Path.DirectorySeparatorChar + "WYNIKI" + Path.DirectorySeparatorChar + student.Class + Path.DirectorySeparatorChar;
+            string resultsPath = "TEST_WPROWADZANIA" + Path.DirectorySeparatorChar + student.Surname + "_" + student.StudentNumber + ".xlsx";
+
+            Workbook workbook = new Workbook(dirPath + resultsPath);
+            Worksheet worksheet = workbook.Worksheets[1];
+
+            var jsonSettings = new EnteringSettingsJsonModel()
+            {
+                NumOfTest = settings.NumOfTest,
+                Params = new EnteringParamsJsonModel()
+                {
+                    NumOfWords = settings.NumOfWords,
+                    WordLength = settings.WordLength,
+                    Time = settings.Time + "s"
+                }
+            };
+
+            string jsonSettingsString = JsonConvert.SerializeObject(jsonSettings);
+
+            CellsFactory factory = new CellsFactory();
+            var style = factory.CreateStyle();
+            style.HorizontalAlignment = TextAlignmentType.Center;
+            style.Font.Color = System.Drawing.Color.Black;
+            style.Font.IsBold = true;
+
+            JsonLayoutOptions options = new JsonLayoutOptions();
+            options.TitleStyle = style;
+            options.ArrayAsTable = true;
+
+            int row = worksheet.Cells.MaxDataRow;
+            if (row == -1)
+            {
+                row = 0;
+            }
+            else
+            {
+                row += 2;
+            }
+
+            JsonUtility.ImportData(jsonSettingsString, worksheet.Cells, row, 0, options);
+
+            await Task.Run(() => workbook.Save(dirPath + resultsPath));
+
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+
+            var excelFile = ExcelFile.Load(dirPath + resultsPath);
+            excelFile.Worksheets.Remove(2);
+            await Task.Run(() => excelFile.Save(dirPath + resultsPath));
+
+            string[] words = new string[settings.NumOfWords];
+
+            for (int i = 0; i < settings.NumOfWords; i++)
+            {
+                words[i] = RandomWord(settings.WordLength);
+            }
+
+            return await Task.Run(() => words);
+        }
+
         public async Task SavePointingTestResult(PointingResultModel result, Student student)
         {
             string dirPath = "." + Path.DirectorySeparatorChar + "WYNIKI" + Path.DirectorySeparatorChar + student.Class + Path.DirectorySeparatorChar;
@@ -22,22 +150,19 @@ namespace DataEnteringQuality.Services
             var ids = new List<PointingIDJsonModel>();
             for (int i = 0; i < result.IDs.Length; i++)
             {
-                string btnWidth = result.BtnWidth[i].ToString();
-                string btnDistance = result.BtnDistance[i].ToString();
-
                 ids.Add(new PointingIDJsonModel()
                 {
-                    BtnDistance = btnDistance + "px",
-                    BtnWidth = btnWidth + "px",
+                    BtnWidth = result.BtnWidth[i].ToString() + "px",
+                    BtnDistance = result.BtnDistance[i].ToString() + "px",
                     ID = result.IDs[i]
                 });
             }
 
             var fullResult = new PointingFullResultJsonModel()
             {
+                NumOfMissClick = result.NumOfMissClick,
                 AttemptsLeft = result.AttemptsLeft,
-                IDs = ids,
-                NumOfMissClick = result.NumOfMissClick
+                IDs = ids
             };
 
             var results = new List<PointingFullResultJsonModel>();
@@ -265,6 +390,22 @@ namespace DataEnteringQuality.Services
             var excelFile = ExcelFile.Load(dirPath + resultsPath);
             excelFile.Worksheets.Remove(2);
             await Task.Run(() => excelFile.Save(dirPath + resultsPath));
+        }
+
+        private string RandomWord(int wordLength)
+        {
+            string path = "." + Path.DirectorySeparatorChar + "slownik" + Path.DirectorySeparatorChar + "slowa_" + wordLength + ".txt";
+            var lines = File.ReadAllLines(path);
+            var randomLineNumber = RandomNumber(0, lines.Length - 1);
+            return lines[randomLineNumber];
+        }
+
+        private static int RandomNumber(int min, int max)
+        {
+            lock (syncLock)
+            {
+                return random.Next(min, max);
+            }
         }
     }
 }

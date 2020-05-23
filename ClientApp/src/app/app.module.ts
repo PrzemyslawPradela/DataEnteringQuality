@@ -21,6 +21,7 @@ import { BasicAuthInterceptor } from './_helpers/basic-auth.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AlertifyService } from './_services/alertify.service';
 import { AuthService } from './_services/auth.service';
+import { EnteringService } from './_services/entering.service';
 import { PointingService } from './_services/pointing.service';
 import { SlideringService } from './_services/slidering.service';
 import { StudentService } from './_services/student.service';
@@ -35,6 +36,7 @@ import { StudentService } from './_services/student.service';
     StudentRegisterComponent,
     LoginComponent,
     ExercisesListComponent,
+    EnteringSettingsComponent,
     EnteringTestComponent,
     PointingSettingsComponent,
     PointingTestComponent,
@@ -67,6 +69,7 @@ import { StudentService } from './_services/student.service';
     StudentService,
     SlideringService,
     PointingService,
+    EnteringService,
     AuthGuard,
 
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

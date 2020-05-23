@@ -30,6 +30,7 @@ export class StudentService {
       .pipe(map(student => {
         localStorage.removeItem('currentUser');
         localStorage.setItem('currentStudent', JSON.stringify(student));
+        this.currentStudentSubject.next(student);
       }));
   }
 

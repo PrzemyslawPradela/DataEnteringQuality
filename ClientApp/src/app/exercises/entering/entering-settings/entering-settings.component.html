@@ -2,10 +2,11 @@
   <div class="card mb3">
     <h4 class="card-header">Test wprowadzania - ustawienia</h4>
     <div class="card-body">
-      <form>
+      <form #settingsForm="ngForm" (ngSubmit)="setEnteringSettings()">
         <div class="form-group">
-          <label for="numOfAttempts">Liczba wyrazów</label>
-          <select class="form-control" id="numOfWords" required>
+          <label for="numOfWords">Liczba wyrazów</label>
+          <select class="form-control" id="numOfWords" name="numOfWords" [(ngModel)]="enteringSettings.numOfWords"
+            required>
             <option>1</option>
             <option>2</option>
             <option>3</option>
@@ -29,8 +30,9 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="wordLength">Długośc wyrazu</label>
-          <select class="form-control" id="wordLength" required>
+          <label for="wordLength">Długość wyrazu</label>
+          <select class="form-control" id="wordLength" name="wordLength" [(ngModel)]="enteringSettings.wordLength"
+            required>
             <option>3</option>
             <option>4</option>
             <option>5</option>
@@ -39,18 +41,14 @@
             <option>8</option>
             <option>9</option>
             <option>10</option>
-            <option>11</option>
-            <option>12</option>
-            <option>13</option>
-            <option>14</option>
-            <option>15</option>
           </select>
         </div>
         <div class="form-group">
           <label for="time">Czas na wykonanie zadania [s]</label>
-          <input type="number" min="5" max="60" step="1" name="time" class="form-control" required />
+          <input type="number" min="5" max="60" step="1" name="time" class="form-control"
+            [(ngModel)]="enteringSettings.time" required />
         </div>
-        <button [disabled]="!registerForm.valid" class="btn btn-primary">
+        <button [disabled]="!settingsForm.valid" class="btn btn-primary">
           Rozpocznij badanie
         </button>
       </form>

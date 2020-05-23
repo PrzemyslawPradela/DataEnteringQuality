@@ -66,6 +66,7 @@ export class PointingTestComponent implements OnInit {
 
   missClick() {
     this.missClickCount++;
+    console.log('missClick: ' + this.missClickCount);
   }
 
   generateTest() {
@@ -80,6 +81,11 @@ export class PointingTestComponent implements OnInit {
 
   sendResult() {
     this.pauseTimer();
+
+    if (this.missClickCount == -1) {
+      this.missClickCount = 0;
+    }
+
     this.pointingService.setPointingResult(this.missClickCount, this.numOfAttempts).subscribe(
       () => {
         this.router.navigate(['/zadania']);
