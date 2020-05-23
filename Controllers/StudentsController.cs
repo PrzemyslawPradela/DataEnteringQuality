@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DataEnteringQuality.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class StudentsController : ControllerBase
@@ -42,6 +41,7 @@ namespace DataEnteringQuality.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
