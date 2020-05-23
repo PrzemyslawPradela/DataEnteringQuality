@@ -28,10 +28,14 @@ export class StudentService {
   register(student: Student) {
     return this.http.post<any>(this.baseUrl + 'api/students/register', student)
       .pipe(map(student => {
-        localStorage.removeItem('currentUser');
         localStorage.setItem('currentStudent', JSON.stringify(student));
         this.currentStudentSubject.next(student);
       }));
+  }
+
+  removeStudentFromStorage() {
+    localStorage.removeItem('currentStudent');
+    this.currentStudentSubject.next(null);
   }
 
 }

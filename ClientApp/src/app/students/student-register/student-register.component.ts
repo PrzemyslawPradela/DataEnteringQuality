@@ -24,6 +24,7 @@ export class StudentRegisterComponent implements OnInit {
   register() {
     this.studentService.register(this.student).subscribe(
       () => {
+        this.authService.logout();
         this.router.navigate(['/zadania']);
       },
       error => {

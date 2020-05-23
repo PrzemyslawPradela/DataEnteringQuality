@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { interval } from 'rxjs';
 import { Student } from 'src/app/_models/student';
 import { AlertifyService } from 'src/app/_services/alertify.service';
+import { AuthService } from 'src/app/_services/auth.service';
 import { StudentService } from 'src/app/_services/student.service';
 
 @Component({
@@ -13,12 +14,15 @@ export class StudentListComponent implements OnInit {
 
   students: Student[];
 
-  constructor(private studentService: StudentService, private alertify: AlertifyService) { }
+  constructor(private studentService: StudentService, private authService: AuthService, private alertify: AlertifyService) { }
 
   ngOnInit() {
     interval(100).subscribe(
       () => {
-        this.loadStudents();
+        const currentUser = this.authService.currentUserValue;
+        if (currentUser) {
+          this.loadStudents();
+        }
       })
   }
 
