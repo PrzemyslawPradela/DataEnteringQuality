@@ -21,3 +21,16 @@
 .divider {
     height: auto;
 }
+
+.btn-wrapper {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.btn-wrapper>button, .btn-wrapper>.divider {
+    display: inline-block;
+}

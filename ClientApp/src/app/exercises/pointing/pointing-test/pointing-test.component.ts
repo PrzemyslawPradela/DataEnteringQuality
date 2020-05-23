@@ -23,12 +23,14 @@ export class PointingTestComponent implements OnInit {
   missClickCount: number;
   timeLeft: number;
   interval: NodeJS.Timeout;
+  running: boolean;
 
   constructor(private pointingService: PointingService, private router: Router, private alertify: AlertifyService) {
     this.testSettings = pointingService.getPointingTest();
     this.btnClickCount = 2;
     this.btnClickArray = [false, false];
     this.missClickCount = 0;
+    this.running = true;
   }
 
   ngOnInit() {
@@ -42,7 +44,9 @@ export class PointingTestComponent implements OnInit {
 
     interval(100).subscribe(
       () => {
-        this.generateTest();
+        if (this.running) {
+          this.generateTest();
+        }
       })
 
     this.startTimer();
@@ -80,6 +84,7 @@ export class PointingTestComponent implements OnInit {
   }
 
   sendResult() {
+    this.running = false;
     this.pauseTimer();
 
     if (this.missClickCount == -1) {

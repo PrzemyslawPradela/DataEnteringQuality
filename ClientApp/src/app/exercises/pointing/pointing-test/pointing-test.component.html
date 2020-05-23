@@ -10,13 +10,15 @@
 </div>
 
 <div class="my-container mb-5">
-  <div class="pointing-div" (click)="missClick()">
-    <button type="button" class="btn btn-primary" [disabled]="btnClickArray[0]"
-      (click)="btnClick(); btnClickArray[0]=true;" [ngStyle]="{'width': btnWidth+'px'}">
-    </button>
-    <div class="divider" [ngStyle]="{'width': btnDistance+'px'}"></div>
-    <button type="button" class="btn btn-primary" [disabled]="btnClickArray[1]"
-      (click)="btnClick(); btnClickArray[1]=true;" [ngStyle]="{'width': btnWidth+'px'}">
-    </button>
+  <div class="pointing-div position-relative" (click)="missClick()">
+    <div class="btn-wrapper">
+      <button type="button" class="btn btn-primary" [disabled]="btnClickArray[0]"
+        (click)="btnClick(); btnClickArray[0]=true;" [ngStyle]="{'width': btnWidth+'px'}">
+      </button>
+      <div class="divider" [ngStyle]="{'width': btnDistance+'px'}"></div>
+      <button type="button" class="btn btn-primary" [disabled]="btnClickArray[1]"
+        (click)="btnClick(); btnClickArray[1]=true;" [ngStyle]="{'width': btnWidth+'px'}">
+      </button>
+    </div>
   </div>
 </div>
