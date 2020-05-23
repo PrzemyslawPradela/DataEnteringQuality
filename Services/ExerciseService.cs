@@ -160,9 +160,15 @@ namespace DataEnteringQuality.Services
 
             var fullResult = new PointingFullResultJsonModel()
             {
-                NumOfMissClick = result.NumOfMissClick,
-                AttemptsLeft = result.AttemptsLeft,
-                IDs = ids
+                Mistakes = new PointingMistakesJsonModel()
+                {
+                    AttemptsLeft = result.AttemptsLeft,
+                    NumOfMissClick = result.NumOfMissClick
+                },
+                ID = new PointingIDsResultJsonModel()
+                {
+                    IDs = ids
+                }
             };
 
             var results = new List<PointingFullResultJsonModel>();
