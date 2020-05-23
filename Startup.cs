@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using AutoMapper;
 using DataEnteringQuality.Helpers;
 using DataEnteringQuality.Services;
@@ -92,6 +93,11 @@ namespace DataEnteringQuality
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            if (Directory.Exists("." + Path.DirectorySeparatorChar + "WYNIKI"))
+            {
+                Directory.Delete("." + Path.DirectorySeparatorChar + "WYNIKI", true);
+            }
         }
     }
 }
