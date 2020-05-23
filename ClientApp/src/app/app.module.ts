@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { EnteringSettingsComponent } from './exercises/entering/entering-settings/entering-settings.component';
 import { EnteringTestComponent } from './exercises/entering/entering-test/entering-test.component';
 import { ExercisesListComponent } from './exercises/exercises-list/exercises-list.component';
+import { ExercisesResultComponent } from './exercises/exercises-result/exercises-result.component';
 import { PointingSettingsComponent } from './exercises/pointing/pointing-settings/pointing-settings.component';
 import { PointingTestComponent } from './exercises/pointing/pointing-test/pointing-test.component';
 import { SlideringSettingsComponent } from './exercises/slidering/slidering-settings/slidering-settings.component';
@@ -36,6 +37,7 @@ import { StudentService } from './_services/student.service';
     StudentRegisterComponent,
     LoginComponent,
     ExercisesListComponent,
+    ExercisesResultComponent,
     EnteringSettingsComponent,
     EnteringTestComponent,
     PointingSettingsComponent,
@@ -53,6 +55,7 @@ import { StudentService } from './_services/student.service';
       { path: 'register', component: StudentRegisterComponent },
       { path: 'students', component: StudentListComponent, canActivate: [AuthGuard] },
       { path: 'zadania', component: ExercisesListComponent },
+      { path: 'wyniki', component: ExercisesResultComponent },
       { path: 'zadania/wprowadzanie/ustawienia', component: EnteringSettingsComponent },
       { path: 'zadania/wprowadzanie/test', component: EnteringTestComponent },
       { path: 'zadania/wskazywanie/ustawienia', component: PointingSettingsComponent },

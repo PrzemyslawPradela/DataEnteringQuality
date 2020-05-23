@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EnteringResult } from '../_models/entering-result';
 import { EnteringSettings } from '../_models/entering-settings';
@@ -77,5 +78,9 @@ export class EnteringService {
     this.enteringResult.averageNumOfMistakesInWords = numOfMistakesInWords / this.enteringResult.numOfWords;
 
     return this.http.post(this.baseUrl + 'api/exercises/entering/' + this.student.id + "/result", this.enteringResult);
+  }
+
+  downloadEnteringResult(studentId: string): Observable<Blob> {
+    return this.http.get(this.baseUrl + 'api/exercises/entering/' + studentId + '/result/download', { responseType: 'blob' })
   }
 }

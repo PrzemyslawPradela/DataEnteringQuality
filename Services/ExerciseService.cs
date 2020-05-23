@@ -17,6 +17,14 @@ namespace DataEnteringQuality.Services
         private static readonly Random random = new Random();
         private static readonly object syncLock = new object();
 
+        public async Task<byte[]> DownloadEnteringTestResult(Student student)
+        {
+            string dirPath = "." + Path.DirectorySeparatorChar + "WYNIKI" + Path.DirectorySeparatorChar + student.Class + Path.DirectorySeparatorChar;
+            string resultsPath = "TEST_WPROWADZANIA" + Path.DirectorySeparatorChar + student.Surname + "_" + student.StudentNumber + ".xlsx";
+            byte[] fileBytes = File.ReadAllBytes(dirPath + resultsPath);
+            return await Task.Run(() => fileBytes);
+        }
+
         public async Task SaveEnteringTestResult(EnteringResultModel result, Student student)
         {
             string dirPath = "." + Path.DirectorySeparatorChar + "WYNIKI" + Path.DirectorySeparatorChar + student.Class + Path.DirectorySeparatorChar;
@@ -137,6 +145,14 @@ namespace DataEnteringQuality.Services
             }
 
             return await Task.Run(() => words);
+        }
+
+        public async Task<byte[]> DownloadPointingTestResult(Student student)
+        {
+            string dirPath = "." + Path.DirectorySeparatorChar + "WYNIKI" + Path.DirectorySeparatorChar + student.Class + Path.DirectorySeparatorChar;
+            string resultsPath = "TEST_WSKAZYWANIA" + Path.DirectorySeparatorChar + student.Surname + "_" + student.StudentNumber + ".xlsx";
+            byte[] fileBytes = File.ReadAllBytes(dirPath + resultsPath);
+            return await Task.Run(() => fileBytes);
         }
 
         public async Task SavePointingTestResult(PointingResultModel result, Student student)
@@ -264,6 +280,14 @@ namespace DataEnteringQuality.Services
             var excelFile = ExcelFile.Load(dirPath + resultsPath);
             excelFile.Worksheets.Remove(2);
             await Task.Run(() => excelFile.Save(dirPath + resultsPath));
+        }
+
+        public async Task<byte[]> DownloadSlideringTestResult(Student student)
+        {
+            string dirPath = "." + Path.DirectorySeparatorChar + "WYNIKI" + Path.DirectorySeparatorChar + student.Class + Path.DirectorySeparatorChar;
+            string resultsPath = "TEST_PRZECIAGANIA" + Path.DirectorySeparatorChar + student.Surname + "_" + student.StudentNumber + ".xlsx";
+            byte[] fileBytes = File.ReadAllBytes(dirPath + resultsPath);
+            return await Task.Run(() => fileBytes);
         }
 
         public async Task SaveSlideringTestResult(SlideringResultModel result, Student student)

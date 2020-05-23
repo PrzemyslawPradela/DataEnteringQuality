@@ -33,7 +33,7 @@ export class EnteringTestComponent implements OnInit {
     this.pauseTimer();
     this.enteringService.setEnteringResult(this.wordsFromTest).subscribe(
       () => {
-        this.router.navigate(['/zadania']);
+        this.router.navigate(['/wyniki']);
       },
       error => {
         this.alertify.error(error);
@@ -48,7 +48,7 @@ export class EnteringTestComponent implements OnInit {
         this.pauseTimer();
         this.enteringService.setEnteringResult(this.wordsFromTest).subscribe(
           () => {
-            this.router.navigate(['/zadania']);
+            this.router.navigate(['/wyniki']);
           },
           error => {
             this.alertify.error(error);

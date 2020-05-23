@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { PointingResult } from '../_models/pointing-result';
 import { PointingSettings } from '../_models/pointing-settings';
 import { PointingSettingsFile } from '../_models/pointing-settings-file';
@@ -71,6 +72,10 @@ export class PointingService {
 
   getPointingResult() {
     return this.pointingResult;
+  }
+
+  downloadPointingResult(studentId: string): Observable<Blob> {
+    return this.http.get(this.baseUrl + 'api/exercises/pointing/' + studentId + '/result/download', { responseType: 'blob' })
   }
 
   private randomNumber(min: number, max: number) {

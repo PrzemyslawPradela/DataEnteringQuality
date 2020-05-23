@@ -1,53 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { interval } from 'rxjs';
 import { Student } from 'src/app/_models/student';
-import { AlertifyService } from 'src/app/_services/alertify.service';
-import { AuthService } from 'src/app/_services/auth.service';
 import { EnteringService } from 'src/app/_services/entering.service';
 import { PointingService } from 'src/app/_services/pointing.service';
 import { SlideringService } from 'src/app/_services/slidering.service';
 import { StudentService } from 'src/app/_services/student.service';
 
 @Component({
-  selector: 'app-student-list',
-  templateUrl: './student-list.component.html',
-  styleUrls: ['./student-list.component.css']
+  selector: 'app-exercises-result',
+  templateUrl: './exercises-result.component.html',
+  styleUrls: ['./exercises-result.component.css']
 })
-export class StudentListComponent implements OnInit {
+export class ExercisesResultComponent implements OnInit {
 
-  students: Student[];
+  private student: Student;
 
-  constructor(private studentService: StudentService,
-    private authService: AuthService,
-    private alertify: AlertifyService,
-    private slideringService: SlideringService,
-    private pointingService: PointingService,
-    private enteringService: EnteringService) { }
+  constructor(private slideringService: SlideringService, private pointingService: PointingService, private enteringService: EnteringService, private studentService: StudentService) {
+    this.student = this.studentService.currentStudentValue;
+  }
 
   ngOnInit() {
-    this.loadStudents();
-
-    interval(1000).subscribe(
-      () => {
-        const currentUser = this.authService.currentUserValue;
-        if (currentUser) {
-          this.loadStudents();
-        }
-      })
   }
 
-  loadStudents() {
-    this.studentService.getStudents().subscribe(
-      (students: Student[]) => {
-        this.students = students;
-      },
-      error => {
-        this.alertify.error(error);
-      });
-  }
-
-  downloadSlideringResult(studentId: string, studentSurname: string, studentNumber: number) {
-    this.slideringService.downloadSlideringResult(studentId)
+  downloadSlideringResult() {
+    this.slideringService.downloadSlideringResult(this.student.id)
       .subscribe(x => {
         var newBlob = new Blob([x], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
@@ -60,7 +35,7 @@ export class StudentListComponent implements OnInit {
 
         var link = document.createElement('a');
         link.href = data;
-        link.download = studentSurname + "_" + studentNumber + "_TEST_PRZECIAGANIA.xlsx";
+        link.download = this.student.surname + "_" + this.student.studentNumber + "_TEST_PRZECIAGANIA.xlsx";
         link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
 
         setTimeout(function () {
@@ -70,8 +45,8 @@ export class StudentListComponent implements OnInit {
       });
   }
 
-  downloadPointingResult(studentId: string, studentSurname: string, studentNumber: number) {
-    this.pointingService.downloadPointingResult(studentId)
+  downloadPointingResult() {
+    this.pointingService.downloadPointingResult(this.student.id)
       .subscribe(x => {
         var newBlob = new Blob([x], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
@@ -84,7 +59,7 @@ export class StudentListComponent implements OnInit {
 
         var link = document.createElement('a');
         link.href = data;
-        link.download = studentSurname + "_" + studentNumber + "_TEST_WSKAZYWANIA.xlsx";
+        link.download = this.student.surname + "_" + this.student.studentNumber + "_TEST_WSKAZYWANIA.xlsx";
         link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
 
         setTimeout(function () {
@@ -94,8 +69,8 @@ export class StudentListComponent implements OnInit {
       });
   }
 
-  downloadEnteringResult(studentId: string, studentSurname: string, studentNumber: number) {
-    this.enteringService.downloadEnteringResult(studentId)
+  downloadEnteringResult() {
+    this.enteringService.downloadEnteringResult(this.student.id)
       .subscribe(x => {
         var newBlob = new Blob([x], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
@@ -108,7 +83,7 @@ export class StudentListComponent implements OnInit {
 
         var link = document.createElement('a');
         link.href = data;
-        link.download = studentSurname + "_" + studentNumber + "_TEST_WPROWADZANIA.xlsx";
+        link.download = this.student.surname + "_" + this.student.studentNumber + "_TEST_WPROWADZANIA.xlsx";
         link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
 
         setTimeout(function () {

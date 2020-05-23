@@ -31,7 +31,7 @@ namespace DataEnteringQuality.Services
         public async Task<Student> RegisterStudent(Student student)
         {
             if (_context.Students.Any(x => x.StudentNumber == student.StudentNumber))
-                throw new Exception("Student with number \"" + student.StudentNumber + "\" already exists");
+                throw new Exception("Student z numerem indeksu: " + student.StudentNumber + " już dolączył do sesji");
 
             student.Id = Guid.NewGuid();
 

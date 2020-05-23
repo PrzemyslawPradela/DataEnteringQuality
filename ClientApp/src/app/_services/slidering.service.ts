@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { SlideringResult } from '../_models/slidering-result';
 import { SlideringSettings } from '../_models/slidering-settings';
 import { Student } from '../_models/student';
@@ -60,7 +61,11 @@ export class SlideringService {
       this.slideringResult.valuesAccuracy[index] = Math.abs(result);
     }
 
-    return this.http.post(this.baseUrl + 'api/exercises/slidering/' + this.student.id + "/result", this.slideringResult);
+    return this.http.post(this.baseUrl + 'api/exercises/slidering/' + this.student.id + '/result', this.slideringResult);
+  }
+
+  downloadSlideringResult(studentId: string): Observable<Blob> {
+    return this.http.get(this.baseUrl + 'api/exercises/slidering/' + studentId + '/result/download', { responseType: 'blob' })
   }
 
   private randomNumber(min: number, max: number) {

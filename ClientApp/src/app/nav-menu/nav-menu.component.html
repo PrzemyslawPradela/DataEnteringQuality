@@ -17,7 +17,14 @@
           <a class="nav-link" [routerLink]="['/zadania']" routerLinkActive="active"><i class="fas fa-tasks fa-lg"></i>
             Zadania</a>
         </li>
+        <li class="nav-item" *ngIf="isStudent()">
+          <a class="nav-link" [routerLink]="['/wyniki']" routerLinkActive="active"><i class="fas fa-poll fa-lg"></i>
+            Wyniki</a>
+        </li>
       </ul>
+    </div>
+    <div *ngIf="isStudent()" class="nav-item text-light">
+      <strong>{{student.name}} {{student.surname}} {{student.studentNumber}}</strong>
     </div>
   </nav>
 </header>

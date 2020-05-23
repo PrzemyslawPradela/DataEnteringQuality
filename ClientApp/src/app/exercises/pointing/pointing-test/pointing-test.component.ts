@@ -93,7 +93,7 @@ export class PointingTestComponent implements OnInit {
 
     this.pointingService.setPointingResult(this.missClickCount, this.numOfAttempts).subscribe(
       () => {
-        this.router.navigate(['/zadania']);
+        this.router.navigate(['/wyniki']);
       },
       error => {
         this.alertify.error(error);

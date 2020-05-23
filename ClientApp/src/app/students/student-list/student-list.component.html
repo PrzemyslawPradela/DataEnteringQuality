@@ -1,13 +1,19 @@
 <div class="container mt-5 mb-5">
   <div class="table-responsive-lg">
-    <table class="table">
+    <table class="table table-striped">
       <thead>
-        <tr class="table-primary">
-          <th scope="col">Lp.</th>
-          <th scope="col">Imię</th>
-          <th scope="col">Nazwisko</th>
-          <th scope="col">Numer indeksu</th>
-          <th scope="col">Grupa studencka</th>
+        <tr class="table-dark">
+          <th rowspan="2">Lp.</th>
+          <th rowspan="2">Imię</th>
+          <th rowspan="2">Nazwisko</th>
+          <th rowspan="2">Numer indeksu</th>
+          <th rowspan="2">Grupa studencka</th>
+          <th colspan="3">Wyniki</th>
+        </tr>
+        <tr class="table-dark">
+          <th>Test wprowadzania</th>
+          <th>Test wskazywania</th>
+          <th>Test przeciągania</th>
         </tr>
       </thead>
       <tbody>
@@ -17,6 +23,22 @@
           <td>{{student.surname}}</td>
           <td>{{student.studentNumber}}</td>
           <td>{{student.class}}</td>
+          <td>
+            <button type="button" class="btn btn-primary"
+              (click)="downloadEnteringResult(student.id, student.surname, student.studentNumber)">
+              <i class="fas fa-download fs-lg"></i>
+            </button>
+          </td>
+          <td><button type="button" class="btn btn-primary"
+              (click)="downloadPointingResult(student.id, student.surname, student.studentNumber)">
+              <i class="fas fa-download fs-lg"></i>
+            </button>
+          </td>
+          <td><button type="button" class="btn btn-primary"
+              (click)="downloadSlideringResult(student.id, student.surname, student.studentNumber)">
+              <i class="fas fa-download fs-lg"></i>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>

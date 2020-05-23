@@ -34,7 +34,7 @@ export class SlideringTestComponent implements OnInit {
     this.pauseTimer();
     this.slideringService.setSlideringResult(this.valuesFromTest).subscribe(
       () => {
-        this.router.navigate(['/zadania']);
+        this.router.navigate(['/wyniki']);
       },
       error => {
         this.alertify.error(error);
@@ -49,7 +49,7 @@ export class SlideringTestComponent implements OnInit {
         this.pauseTimer();
         this.slideringService.setSlideringResult(this.valuesFromTest).subscribe(
           () => {
-            this.router.navigate(['/zadania']);
+            this.router.navigate(['/wyniki']);
           },
           error => {
             this.alertify.error(error);

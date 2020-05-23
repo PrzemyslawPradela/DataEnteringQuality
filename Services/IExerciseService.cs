@@ -8,9 +8,14 @@ namespace DataEnteringQuality.Services
     {
         Task SaveSlideringTestSettings(SlideringSettingsModel settings, Student student);
         Task SaveSlideringTestResult(SlideringResultModel result, Student student);
+        Task<byte[]> DownloadSlideringTestResult(Student student);
+
         Task SavePointingTestSettings(PointingSettingsModel settings, Student student);
         Task SavePointingTestResult(PointingResultModel result, Student student);
+        Task<byte[]> DownloadPointingTestResult(Student student);
+
         Task<string[]> SaveEnteringTestSettings(EnteringSettingsModel settings, Student student);
         Task SaveEnteringTestResult(EnteringResultModel result, Student student);
+        Task<byte[]> DownloadEnteringTestResult(Student student);
     }
 }
