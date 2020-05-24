@@ -57,7 +57,7 @@ export class SlideringService {
       if (valuesFromTest[index] != this.values[index]) {
         this.slideringResult.numOfMistakes++;
       }
-      const result = valuesFromTest[index] - this.values[index];
+      const result = this.values[index] - valuesFromTest[index];
       this.slideringResult.valuesAccuracy[index] = Math.abs(result);
     }
 

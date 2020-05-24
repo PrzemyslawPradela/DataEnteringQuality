@@ -71,7 +71,18 @@ export class EnteringService {
                 numOfMistakesInWords++;
               }
             }
+          } else {
+            const result = word.length - wordFromTest.length;
+            const abs = Math.abs(result);
+            numOfMistakesInWords += abs;
+            for (let index = 0; index < wordFromTest.length; index++) {
+              if (wordFromTest[index] != word[index]) {
+                numOfMistakesInWords++;
+              }
+            }
           }
+        } else {
+          numOfMistakesInWords += word.length;
         }
       }
     }

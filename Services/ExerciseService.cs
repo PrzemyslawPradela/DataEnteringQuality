@@ -299,7 +299,7 @@ namespace DataEnteringQuality.Services
             Worksheet worksheet = workbook.Worksheets[0];
 
             var valuesAccuracy = new List<SlideringValuesAccuracyJsonModel>();
-            for (int i = 0; i < result.ValuesAccuracy.Length; i++)
+            for (int i = 0; i < result.NumOfAttempts; i++)
             {
                 string valueFromTest;
                 string accuracy;

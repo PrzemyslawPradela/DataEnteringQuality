@@ -9,3 +9,9 @@
     width: 33%;
     text-align: center;
 }
+
+.title-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

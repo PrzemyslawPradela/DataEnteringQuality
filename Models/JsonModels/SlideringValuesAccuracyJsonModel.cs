@@ -10,7 +10,7 @@ namespace DataEnteringQuality.Models.JsonModels
         [JsonProperty("WARTOŚC USTAWIONA")]
         public string ValueFromTest { get; set; }
 
-        [JsonProperty("DOKŁADNOŚĆ USTAWIENIA WSKAŹNIKA")]
+        [JsonProperty("BŁĄD BEZWZGLĘDNY")]
         public string Accuracy { get; set; }
     }
 }
