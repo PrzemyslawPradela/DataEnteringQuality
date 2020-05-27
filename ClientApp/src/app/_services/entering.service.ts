@@ -46,50 +46,43 @@ export class EnteringService {
     return this.words;
   }
 
-  setEnteringResult(wordsFromTest: string[]) {
+  setEnteringResult(wordsFromTest: string[], typingTime: number[]) {
     this.enteringResult.numOfTest = this.numOfTest;
     this.enteringResult.numOfWords = this.enteringSettings.numOfWords;
-    this.enteringResult.numOfMistypedWords = 0;
-    this.enteringResult.averageNumOfMistakesInWords = 0;
-    this.enteringResult.numOfEnteredWords = 0;
-    let numOfMistakesInWords = 0;
-    let numOfNotEnteredWords = 0;
-
-    if (wordsFromTest.length == 0) {
-      this.enteringResult.allWordsEmpty = true;
-    } else {
-      this.enteringResult.allWordsEmpty = false;
-    }
+    this.enteringResult.typingTime = typingTime;
+    let numOfMistakes = 0;
 
     for (let index = 0; index < this.words.length; index++) {
       let wordFromTest = wordsFromTest[index];
       let word = this.words[index];
       if (wordFromTest != word) {
-        this.enteringResult.numOfMistypedWords++;
-        if (wordFromTest != null) {
-          if (wordFromTest.length == word.length) {
-            for (let index = 0; index < this.testSettings.wordLength; index++) {
-              if (wordFromTest[index] != word[index]) {
-                numOfMistakesInWords++;
-              }
-            }
-          } else {
-            const result = word.length - wordFromTest.length;
-            const abs = Math.abs(result);
-            numOfMistakesInWords += abs;
-            for (let index = 0; index < wordFromTest.length; index++) {
-              if (wordFromTest[index] != word[index]) {
-                numOfMistakesInWords++;
-              }
-            }
-          }
-        } else {
-          numOfNotEnteredWords++;
-        }
+        numOfMistakes++;
       }
     }
-    this.enteringResult.numOfEnteredWords = this.enteringResult.numOfWords - numOfNotEnteredWords;
-    this.enteringResult.averageNumOfMistakesInWords = numOfMistakesInWords / this.enteringResult.numOfEnteredWords;
+
+    let cpsTimeInMs = 0;
+    typingTime.forEach(element => {
+      if (element != 0) {
+        cpsTimeInMs += element;
+      }
+    });
+
+    const cpsTime = cpsTimeInMs / 1000;
+
+    let cpsChars = 0;
+    wordsFromTest.forEach(element => {
+      if (element != null) {
+        cpsChars += element.length;
+      }
+    });
+
+    const cps = cpsChars / cpsTime;
+
+    this.enteringResult.cps = cps.toFixed(2).replace('.', ',');
+
+    this.enteringResult.wpm = (cps * 60 / 5).toFixed(2).replace('.', ',');
+
+    this.enteringResult.mistakeProbability = (numOfMistakes / this.enteringResult.numOfWords).toFixed(2).replace('.', ',');
 
     return this.http.post(this.baseUrl + 'api/exercises/entering/' + this.student.id + "/result", this.enteringResult);
   }

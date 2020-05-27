@@ -33,28 +33,27 @@ namespace DataEnteringQuality.Services
             Workbook workbook = new Workbook(dirPath + resultsPath);
             Worksheet worksheet = workbook.Worksheets[0];
 
-            var averageNumOfMistakesInWords = result.AverageNumOfMistakesInWords.ToString();
-
-            if (result.AllWordsEmpty)
-                averageNumOfMistakesInWords = "NIEPRZEPISANO WYRAZÓW";
-
-            var fullResult = new EnteringFullResultJsonModel()
+            var typingTime = new List<EnteringTypingTimeJsonModel>();
+            foreach (var item in result.TypingTime)
             {
-                NumOfMistypedWords = result.NumOfMistypedWords,
-                AverageNumOfMistakesInWords = averageNumOfMistakesInWords,
-                NumOfEnteredWords = result.NumOfEnteredWords
-            };
-
-            var results = new List<EnteringFullResultJsonModel>();
-            results.Add(fullResult);
+                typingTime.Add(new EnteringTypingTimeJsonModel()
+                {
+                    TypingTime = item
+                });
+            }
 
             var jsonResult = new EnteringResultJsonModel()
             {
                 NumOfTest = result.NumOfTest,
-                Results = results
+                CPS = result.CPS,
+                WPM = result.WPM,
+                MistakeProbability = result.MistakeProbability,
             };
 
             string jsonResultString = JsonConvert.SerializeObject(jsonResult);
+            string jsonTypingTime = JsonConvert.SerializeObject(typingTime);
+
+            Console.Write(jsonTypingTime);
 
             CellsFactory factory = new CellsFactory();
             var style = factory.CreateStyle();
@@ -76,7 +75,9 @@ namespace DataEnteringQuality.Services
                 row += 2;
             }
 
+
             JsonUtility.ImportData(jsonResultString, worksheet.Cells, row, 0, options);
+            JsonUtility.ImportData(jsonTypingTime, worksheet.Cells, row, 4, options);
 
             await Task.Run(() => workbook.Save(dirPath + resultsPath));
 

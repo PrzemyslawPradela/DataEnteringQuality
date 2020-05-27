@@ -1,8 +1,8 @@
 export class EnteringResult {
     numOfTest: number;
     numOfWords: number;
-    averageNumOfMistakesInWords: number;
-    numOfMistypedWords: number;
-    numOfEnteredWords: number;
-    allWordsEmpty: boolean;
+    cps: string;
+    wpm: string;
+    typingTime: number[];
+    mistakeProbability: string;
 }

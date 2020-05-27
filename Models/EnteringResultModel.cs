@@ -4,9 +4,9 @@ namespace DataEnteringQuality.Models
     {
         public int NumOfTest { get; set; }
         public int NumOfWords { get; set; }
-        public double AverageNumOfMistakesInWords { get; set; }
-        public int NumOfMistypedWords { get; set; }
-        public bool AllWordsEmpty { get; set; }
-        public int NumOfEnteredWords { get; set; }
+        public string CPS { get; set; }
+        public string WPM { get; set; }
+        public string MistakeProbability { get; set; }
+        public int[] TypingTime { get; set; }
     }
 }

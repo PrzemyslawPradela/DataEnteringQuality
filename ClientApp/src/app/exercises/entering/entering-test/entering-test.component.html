@@ -21,7 +21,8 @@
       <form #testForm="ngForm" (ngSubmit)="sendResult()">
         <div *ngFor="let word of wordsToType; let i=index">
           <div class=" form-group">
-            <input type="text" class="form-control" [(ngModel)]="wordsFromTest[i]" name="{{i}}" required>
+            <input type="text" class="form-control" [(ngModel)]="wordsFromTest[i]" name="{{i}}" required
+              (keyup)="checkSpeed(i)">
           </div>
         </div>
         <button class="btn btn-primary" [disabled]="!testForm.valid">
