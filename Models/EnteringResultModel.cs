@@ -7,5 +7,6 @@ namespace DataEnteringQuality.Models
         public double AverageNumOfMistakesInWords { get; set; }
         public int NumOfMistypedWords { get; set; }
         public bool AllWordsEmpty { get; set; }
+        public int NumOfEnteredWords { get; set; }
     }
 }

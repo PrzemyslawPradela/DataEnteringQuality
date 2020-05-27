@@ -4,5 +4,5 @@ export class PointingResult {
     btnDistance: number[];
     attemptsLeft: number;
     numOfMissClick: number;
-    ids: number[] = [];
+    ids: string[] = [];
 }

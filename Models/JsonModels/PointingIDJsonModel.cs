@@ -11,6 +11,6 @@ namespace DataEnteringQuality.Models.JsonModels
         public string BtnDistance { get; set; }
 
         [JsonProperty("ID")]
-        public double ID { get; set; }
+        public string ID { get; set; }
     }
 }

@@ -41,7 +41,8 @@ namespace DataEnteringQuality.Services
             var fullResult = new EnteringFullResultJsonModel()
             {
                 NumOfMistypedWords = result.NumOfMistypedWords,
-                AverageNumOfMistakesInWords = averageNumOfMistakesInWords
+                AverageNumOfMistakesInWords = averageNumOfMistakesInWords,
+                NumOfEnteredWords = result.NumOfEnteredWords
             };
 
             var results = new List<EnteringFullResultJsonModel>();

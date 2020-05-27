@@ -1,7 +1,8 @@
 export class EnteringResult {
     numOfTest: number;
     numOfWords: number;
-    averageNumOfMistakesInWords: number = 0;
-    numOfMistypedWords: number = 0;
+    averageNumOfMistakesInWords: number;
+    numOfMistypedWords: number;
+    numOfEnteredWords: number;
     allWordsEmpty: boolean;
 }

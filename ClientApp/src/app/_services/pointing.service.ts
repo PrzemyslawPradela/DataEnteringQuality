@@ -64,7 +64,7 @@ export class PointingService {
       const d = this.pointingSettings.btnDistance[index];
       const w = this.pointingSettings.btnWidth[index];
       const id = Math.log2(d + w / w);
-      this.pointingResult.ids[index] = id;
+      this.pointingResult.ids[index] = id.toFixed(2).replace(".", ",");
     }
 
     return this.http.post(this.baseUrl + 'api/exercises/pointing/' + this.student.id + "/result", this.pointingResult);

@@ -51,7 +51,9 @@ export class EnteringService {
     this.enteringResult.numOfWords = this.enteringSettings.numOfWords;
     this.enteringResult.numOfMistypedWords = 0;
     this.enteringResult.averageNumOfMistakesInWords = 0;
+    this.enteringResult.numOfEnteredWords = 0;
     let numOfMistakesInWords = 0;
+    let numOfNotEnteredWords = 0;
 
     if (wordsFromTest.length == 0) {
       this.enteringResult.allWordsEmpty = true;
@@ -82,11 +84,12 @@ export class EnteringService {
             }
           }
         } else {
-          numOfMistakesInWords += word.length;
+          numOfNotEnteredWords++;
         }
       }
     }
-    this.enteringResult.averageNumOfMistakesInWords = numOfMistakesInWords / this.enteringResult.numOfWords;
+    this.enteringResult.numOfEnteredWords = this.enteringResult.numOfWords - numOfNotEnteredWords;
+    this.enteringResult.averageNumOfMistakesInWords = numOfMistakesInWords / this.enteringResult.numOfEnteredWords;
 
     return this.http.post(this.baseUrl + 'api/exercises/entering/' + this.student.id + "/result", this.enteringResult);
   }

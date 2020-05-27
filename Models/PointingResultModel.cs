@@ -7,6 +7,6 @@ namespace DataEnteringQuality.Models
         public int[] BtnDistance { get; set; }
         public int AttemptsLeft { get; set; }
         public int NumOfMissClick { get; set; }
-        public double[] IDs { get; set; }
+        public string[] IDs { get; set; }
     }
 }
