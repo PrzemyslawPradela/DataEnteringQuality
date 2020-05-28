@@ -5,3 +5,7 @@
 .form-control {
     width: auto;
 }
+
+.my-label {
+    margin-left: 1em;
+}

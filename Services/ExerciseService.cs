@@ -99,12 +99,9 @@ namespace DataEnteringQuality.Services
             var jsonSettings = new EnteringSettingsJsonModel()
             {
                 NumOfTest = settings.NumOfTest,
-                Params = new EnteringParamsJsonModel()
-                {
-                    NumOfWords = settings.NumOfWords,
-                    WordLength = settings.WordLength,
-                    Time = settings.Time + "s"
-                }
+                NumOfWords = settings.NumOfWords,
+                Time = settings.Time,
+                WordLength = settings.WordLength
             };
 
             string jsonSettingsString = JsonConvert.SerializeObject(jsonSettings);
@@ -242,13 +239,10 @@ namespace DataEnteringQuality.Services
             var jsonSettings = new PointingSettingsJsonModel()
             {
                 NumOfTest = settings.NumOfTest,
-                Params = new PointingParamsJsonModel()
-                {
-                    NumOfAttempts = settings.NumOfAttempts,
-                    BtnWidth = "LOSOWA",
-                    BtnDistance = "LOSOWA",
-                    Time = settings.Time + "s"
-                }
+                D = settings.D,
+                W = settings.D,
+                NumOfAttempts = settings.NumOfAttempts,
+                Time = settings.Time
             };
 
             string jsonSettingsString = JsonConvert.SerializeObject(jsonSettings);

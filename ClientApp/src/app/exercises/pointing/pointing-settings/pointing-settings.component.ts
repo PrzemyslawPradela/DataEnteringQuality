@@ -19,6 +19,8 @@ export class PointingSettingsComponent implements OnInit {
 
   ngOnInit() {
     this.pointingSettings.time = 5;
+    this.pointingSettings.w = 5;
+    this.pointingSettings.d = 100;
   }
 
   setPointingSettings() {

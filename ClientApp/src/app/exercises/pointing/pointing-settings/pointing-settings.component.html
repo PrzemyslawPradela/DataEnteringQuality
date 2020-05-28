@@ -29,6 +29,18 @@
             <option>20</option>
           </select>
         </div>
+        <div class=" form-group">
+          <label for="btnWidth">Szerokośc kwadratów:</label>
+          <label class="my-label">{{pointingSettings.w}}px</label>
+          <input type="range" min="5" max="75" step="1" class="custom-range" [(ngModel)]="pointingSettings.w"
+            name="btnWidth" id="btnWidth" required>
+        </div>
+        <div class=" form-group">
+          <label for="btnDistance">Odległość między kwadratami:</label>
+          <label class="my-label">{{pointingSettings.d}}px</label>
+          <input type="range" min="100" max="450" step="1" class="custom-range" [(ngModel)]="pointingSettings.d"
+            name="btnDistance" id="btnDistance" required>
+        </div>
         <div class="form-group">
           <label for="time">Czas na wykonanie zadania [s]</label>
           <input type="number" min="5" max="60" step="1" id="time" name="time" class="form-control"
