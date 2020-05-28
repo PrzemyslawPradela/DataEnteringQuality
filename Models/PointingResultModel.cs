@@ -3,10 +3,13 @@ namespace DataEnteringQuality.Models
     public class PointingResultModel
     {
         public int NumOfTest { get; set; }
-        public int[] BtnWidth { get; set; }
-        public int[] BtnDistance { get; set; }
-        public int AttemptsLeft { get; set; }
         public int NumOfMissClick { get; set; }
-        public string[] IDs { get; set; }
+        public int AttemptsLeft { get; set; }
+        public string We { get; set; }
+        public string ID { get; set; }
+        public string IDe { get; set; }
+        public string Tm { get; set; }
+        public string Pw { get; set; }
+        public string Vp { get; set; }
     }
 }

@@ -183,11 +183,7 @@ export class PointingTestComponent implements OnInit {
     this.running = false;
     this.pauseTimer();
 
-    if (this.missClickCounter == -1) {
-      this.missClickCounter = 0;
-    }
-
-    this.pointingService.setPointingResult(this.missClickCounter).subscribe(
+    this.pointingService.setPointingResult(this.missClickCounter, this.distanceFromMiddle, this.moveTime, this.numOfAttempts).subscribe(
       () => {
         this.router.navigate(['/wyniki']);
       },

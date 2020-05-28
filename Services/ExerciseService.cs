@@ -162,37 +162,17 @@ namespace DataEnteringQuality.Services
             Workbook workbook = new Workbook(dirPath + resultsPath);
             Worksheet worksheet = workbook.Worksheets[0];
 
-            var ids = new List<PointingIDJsonModel>();
-            for (int i = 0; i < result.IDs.Length; i++)
-            {
-                ids.Add(new PointingIDJsonModel()
-                {
-                    BtnWidth = result.BtnWidth[i].ToString() + "px",
-                    BtnDistance = result.BtnDistance[i].ToString() + "px",
-                    ID = result.IDs[i]
-                });
-            }
-
-            var fullResult = new PointingFullResultJsonModel()
-            {
-                Mistakes = new PointingMistakesJsonModel()
-                {
-                    AttemptsLeft = result.AttemptsLeft,
-                    NumOfMissClick = result.NumOfMissClick
-                },
-                ID = new PointingIDsResultJsonModel()
-                {
-                    IDs = ids
-                }
-            };
-
-            var results = new List<PointingFullResultJsonModel>();
-            results.Add(fullResult);
-
             var jsonResult = new PointingResultJsonModel()
             {
                 NumOfTest = result.NumOfTest,
-                Results = results
+                ID = result.ID,
+                IDe = result.IDe,
+                NumOfMissClick = result.NumOfMissClick,
+                Pw = result.Pw,
+                Tm = result.Tm,
+                Vp = result.Vp,
+                We = result.We,
+                AttemptsLeft = result.AttemptsLeft
             };
 
             string jsonResultString = JsonConvert.SerializeObject(jsonResult);
@@ -240,7 +220,7 @@ namespace DataEnteringQuality.Services
             {
                 NumOfTest = settings.NumOfTest,
                 D = settings.D,
-                W = settings.D,
+                W = settings.W,
                 NumOfAttempts = settings.NumOfAttempts,
                 Time = settings.Time
             };
