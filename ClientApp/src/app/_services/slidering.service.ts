@@ -47,7 +47,7 @@ export class SlideringService {
     return this.values;
   }
 
-  setSlideringResult(valuesFromTest: number[]) {
+  setSlideringResult(valuesFromTest: number[], time: number[]) {
     this.slideringResult.numOfTest = this.numOfTest;
     this.slideringResult.numOfAttempts = this.slideringSettings.numOfAttempts;
     this.slideringResult.valuesToSet = this.values;
@@ -57,8 +57,16 @@ export class SlideringService {
       if (valuesFromTest[index] != this.values[index]) {
         this.slideringResult.numOfMistakes++;
       }
-      const result = this.values[index] - valuesFromTest[index];
-      this.slideringResult.valuesAccuracy[index] = Math.abs(result);
+
+      const Bb = valuesFromTest[index] - this.values[index];
+      this.slideringResult.Bb[index] = Math.abs(Bb);
+
+      const Bw = Bb / this.values[index];
+      this.slideringResult.Bw[index] = Math.abs(Bw).toFixed(2).replace('.', ',');;
+
+      const TmInMs = time.reduce((a, b) => a + b) / time.length;
+      const Tm = TmInMs / 1000;
+      this.slideringResult.Tm = Tm.toFixed(3).replace('.', ',');
     }
 
     return this.http.post(this.baseUrl + 'api/exercises/slidering/' + this.student.id + '/result', this.slideringResult);

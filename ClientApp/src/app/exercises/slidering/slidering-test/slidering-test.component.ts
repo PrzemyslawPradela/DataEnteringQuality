@@ -14,6 +14,9 @@ export class SlideringTestComponent implements OnInit {
   valuesToSet: number[];
   valuesFromTest: number[];
   testSettings: SlideringSettings;
+  Tm: number[];
+  timeStart: number[];
+  timeStop: number[];
   timeLeft: number;
   interval: NodeJS.Timeout;
 
@@ -21,6 +24,9 @@ export class SlideringTestComponent implements OnInit {
     this.testSettings = slideringService.testSettings;
     this.valuesFromTest = [];
     this.timeLeft = this.testSettings.time;
+    this.Tm = [this.testSettings.numOfAttempts];
+    this.timeStart = [this.testSettings.numOfAttempts];
+    this.timeStop = [this.testSettings.numOfAttempts];
   }
 
   ngOnInit() {
@@ -30,9 +36,25 @@ export class SlideringTestComponent implements OnInit {
     this.startTimer();
   }
 
+  getStartTime(i: number) {
+    this.timeStart[i] = new Date().getTime();
+  }
+
+  getStopTime(i: number) {
+    this.timeStop[i] = new Date().getTime();
+  }
+
+  calculateTime() {
+    for (let index = 0; index < this.testSettings.numOfAttempts; index++) {
+      this.Tm[index] = this.timeStop[index] - this.timeStart[index];
+    }
+  }
+
   sendResult() {
+    console.log(this.Tm);
+    this.calculateTime();
     this.pauseTimer();
-    this.slideringService.setSlideringResult(this.valuesFromTest).subscribe(
+    this.slideringService.setSlideringResult(this.valuesFromTest, this.Tm).subscribe(
       () => {
         this.router.navigate(['/wyniki']);
       },
@@ -46,14 +68,7 @@ export class SlideringTestComponent implements OnInit {
       if (this.timeLeft > 0) {
         this.timeLeft--;
       } else {
-        this.pauseTimer();
-        this.slideringService.setSlideringResult(this.valuesFromTest).subscribe(
-          () => {
-            this.router.navigate(['/wyniki']);
-          },
-          error => {
-            this.alertify.error(error);
-          });
+        this.sendResult();
       }
     }, 1000)
   }
@@ -65,6 +80,9 @@ export class SlideringTestComponent implements OnInit {
   private fillValuesFromTestWithZero() {
     for (let index = 0; index < this.testSettings.numOfAttempts; index++) {
       this.valuesFromTest[index] = 0;
+      this.Tm[index] = 0;
+      this.timeStart[index] = 0;
+      this.timeStop[index] = 0;
     }
   }
 

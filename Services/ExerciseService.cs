@@ -278,39 +278,36 @@ namespace DataEnteringQuality.Services
             for (int i = 0; i < result.NumOfAttempts; i++)
             {
                 string valueFromTest;
-                string accuracy;
+                string Bb;
+                string Bw;
                 if (result.ValuesFromTest[i] == 0)
                 {
                     valueFromTest = "WARTOŚĆ NIEUSTAWIONA";
-                    accuracy = "WARTOŚĆ NIEUSTAWIONA";
+                    Bb = "WARTOŚĆ NIEUSTAWIONA";
+                    Bw = "WARTOŚĆ NIEUSTAWIONA";
                 }
                 else
                 {
                     valueFromTest = result.ValuesFromTest[i].ToString();
-                    accuracy = result.ValuesAccuracy[i].ToString();
+                    Bb = result.Bb[i].ToString();
+                    Bw = result.Bw[i];
                 }
 
                 valuesAccuracy.Add(new SlideringValuesAccuracyJsonModel()
                 {
                     ValueToSet = result.ValuesToSet[i],
                     ValueFromTest = valueFromTest,
-                    Accuracy = accuracy
+                    Bb = Bb,
+                    Bw = Bw,
                 });
             }
-
-            var fullResult = new SlideringFullResultJsonModel()
-            {
-                NumOfMistakes = result.NumOfMistakes,
-                ValuesAccuracy = valuesAccuracy
-            };
-
-            var results = new List<SlideringFullResultJsonModel>();
-            results.Add(fullResult);
 
             var jsonResult = new SlideringResultJsonModel()
             {
                 NumOfTest = result.NumOfTest,
-                Results = results
+                NumOfMistakes = result.NumOfMistakes,
+                ValuesAccuracy = valuesAccuracy,
+                Tm = result.Tm
             };
 
             string jsonResultString = JsonConvert.SerializeObject(jsonResult);
@@ -357,12 +354,9 @@ namespace DataEnteringQuality.Services
             var jsonSettings = new SlideringSettingsJsonModel()
             {
                 NumOfTest = settings.NumOfTest,
-                Params = new SlideringParamsJsonModel()
-                {
-                    NumOfAttempts = settings.NumOfAttempts,
-                    ValuesRange = "<" + settings.NumbersFrom + "," + settings.NumbersTo + ">",
-                    Time = settings.Time + "s"
-                }
+                NumOfAttempts = settings.NumOfAttempts,
+                Time = settings.Time,
+                ValuesRange = "<" + settings.NumbersFrom + ";" + settings.NumbersTo + ">"
             };
 
             string jsonSettingsString = JsonConvert.SerializeObject(jsonSettings);

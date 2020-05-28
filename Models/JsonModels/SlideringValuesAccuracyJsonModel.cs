@@ -11,6 +11,9 @@ namespace DataEnteringQuality.Models.JsonModels
         public string ValueFromTest { get; set; }
 
         [JsonProperty("BŁĄD BEZWZGLĘDNY")]
-        public string Accuracy { get; set; }
+        public string Bb { get; set; }
+
+        [JsonProperty("BŁĄD WZGLĘDNY")]
+        public string Bw { get; set; }
     }
 }

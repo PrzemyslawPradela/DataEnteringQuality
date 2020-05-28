@@ -8,7 +8,13 @@ namespace DataEnteringQuality.Models.JsonModels
         [JsonProperty("NR TESTU")]
         public int NumOfTest { get; set; }
 
-        [JsonProperty("WYNIKI")]
-        public List<SlideringFullResultJsonModel> Results { get; set; }
+        [JsonProperty("LICZBA BŁĘDÓW")]
+        public int NumOfMistakes { get; set; }
+
+        [JsonProperty("Tm [s]")]
+        public string Tm { get; set; }
+
+        [JsonProperty("DOKŁADNOŚĆ USTAWIENIA WSKAŹNIKA")]
+        public List<SlideringValuesAccuracyJsonModel> ValuesAccuracy { get; set; }
     }
 }

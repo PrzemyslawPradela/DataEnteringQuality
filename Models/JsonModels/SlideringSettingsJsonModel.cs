@@ -7,7 +7,13 @@ namespace DataEnteringQuality.Models.JsonModels
         [JsonProperty("NR TESTU")]
         public int NumOfTest { get; set; }
 
-        [JsonProperty("PARAMETRY")]
-        public SlideringParamsJsonModel Params { get; set; }
+        [JsonProperty("LICZBA PRÓB")]
+        public int NumOfAttempts { get; set; }
+
+        [JsonProperty("WAROŚCI Z ZAKRESU")]
+        public string ValuesRange { get; set; }
+
+        [JsonProperty("CZAS NA WYKONANIE ZADANIA [s]")]
+        public int Time { get; set; }
     }
 }
