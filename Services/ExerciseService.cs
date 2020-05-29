@@ -53,8 +53,6 @@ namespace DataEnteringQuality.Services
             string jsonResultString = JsonConvert.SerializeObject(jsonResult);
             string jsonTypingTime = JsonConvert.SerializeObject(typingTime);
 
-            Console.Write(jsonTypingTime);
-
             CellsFactory factory = new CellsFactory();
             var style = factory.CreateStyle();
             style.HorizontalAlignment = TextAlignmentType.Center;

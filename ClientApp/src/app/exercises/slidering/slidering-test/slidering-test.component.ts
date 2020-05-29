@@ -51,7 +51,6 @@ export class SlideringTestComponent implements OnInit {
   }
 
   sendResult() {
-    console.log(this.Tm);
     this.calculateTime();
     this.pauseTimer();
     this.slideringService.setSlideringResult(this.valuesFromTest, this.Tm).subscribe(
