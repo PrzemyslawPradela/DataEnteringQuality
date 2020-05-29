@@ -104,18 +104,16 @@ export class PointingService {
     this.pointingResult.numOfTest = this.numOfTest;
     this.pointingResult.numOfMissClick = numOfMissClick;
 
-    const n = distanceFromMiddle.length;
-    const mean = distanceFromMiddle.reduce((a, b) => a + b) / n;
-    const s = Math.sqrt(distanceFromMiddle.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n);
+    const s = this.standardDeviation(distanceFromMiddle);
     const We = 4.133 * s;
     this.pointingResult.We = We.toFixed(2).replace('.', ',');
 
-    this.pointingResult.ID = Math.log2(this.pointingSettings.d + this.pointingSettings.w / this.pointingSettings.w).toFixed(2).replace('.', ',');
+    this.pointingResult.ID = Math.log2((this.pointingSettings.d + this.pointingSettings.w) / this.pointingSettings.w).toFixed(2).replace('.', ',');
 
-    const IDe = Math.log2(this.pointingSettings.d + We / We);
+    const IDe = Math.log2((this.pointingSettings.d + We) / We);
     this.pointingResult.IDe = IDe.toFixed(2).replace('.', ',');
 
-    const TmInMs = moveTime.reduce((a, b) => a + b) / moveTime.length;
+    const TmInMs = this.average(moveTime);
     const Tm = TmInMs / 1000;
     this.pointingResult.Tm = Tm.toFixed(3).replace('.', ',');
 
@@ -138,6 +136,30 @@ export class PointingService {
 
   private randomNumber(min: number, max: number) {
     return Math.floor(Math.random() * (max - min) + min);
+  }
+
+  private standardDeviation(values: number[]) {
+    var avg = this.average(values);
+
+    var squareDiffs = values.map(function (value: number) {
+      var diff = value - avg;
+      var sqrDiff = diff * diff;
+      return sqrDiff;
+    });
+
+    var avgSquareDiff = this.average(squareDiffs);
+
+    var stdDev = Math.sqrt(avgSquareDiff);
+    return stdDev;
+  }
+
+  private average(data: number[]) {
+    var sum = data.reduce(function (sum: number, value: number) {
+      return sum + value;
+    }, 0);
+
+    var avg = sum / data.length;
+    return avg;
   }
 
 }

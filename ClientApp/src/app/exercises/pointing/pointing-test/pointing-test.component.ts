@@ -45,7 +45,6 @@ export class PointingTestComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.timeStart = new Date().getTime();
     this.timeLeft = this.testSettings.time;
     this.numOfAttempts = this.testSettings.numOfAttempts;
 
@@ -93,18 +92,14 @@ export class PointingTestComponent implements OnInit {
     if ((x >= this.middleX - this.w / 2 && x <= this.middleX + this.w / 2) && (y >= this.middleY - this.w / 2 && y <= this.middleY + this.w / 2)) {
       if (this.rectClickCounterArray[0] == false) {
 
-        if (this.numOfAttempts == this.testSettings.numOfAttempts && this.rectClickCounter == 2) {
-          this.timeStop = new Date().getTime();
-          const mT = this.timeStop - this.timeStart;
-          this.moveTime.push(mT);
-        }
-
         if (this.rectClickCounter == 2) {
           this.timeStart = new Date().getTime();
+          console.log('Czas rozpoczęcia: ' + this.timeStart);
         }
 
         if (this.rectClickCounter == 1) {
           this.timeStop = new Date().getTime();
+          console.log('Czas kliknięcia: ' + this.timeStop);
         }
 
         this.rectClickCounter--;
@@ -116,24 +111,19 @@ export class PointingTestComponent implements OnInit {
         const dfmY = Math.abs(this.middleY - y);
         const dfmPow2 = Math.pow(dfmX, 2) + Math.pow(dfmY, 2);
         const dfm = Math.sqrt(dfmPow2);
-        this.distanceFromMiddle.push(dfm);
+        this.distanceFromMiddle.push(Math.round((dfm + Number.EPSILON) * 100) / 100);
       }
     } else if ((x >= this.middleX2 - this.w / 2 && x <= this.middleX2 + this.w / 2) && (y >= this.middleY2 - this.w / 2 && y <= this.middleY2 + this.w / 2)) {
       if (this.rectClickCounterArray[1] == false) {
 
-        if (this.numOfAttempts == this.testSettings.numOfAttempts && this.rectClickCounter == 2) {
-          this.timeStop = new Date().getTime();
-          const mT = this.timeStop - this.timeStart;
-          this.moveTime.push(mT);
-        }
-
-
         if (this.rectClickCounter == 2) {
           this.timeStart = new Date().getTime();
+          console.log('Czas rozpoczęcia: ' + this.timeStart);
         }
 
         if (this.rectClickCounter == 1) {
           this.timeStop = new Date().getTime();
+          console.log('Czas kliknięcia: ' + this.timeStop);
         }
 
         this.rectClickCounter--;
@@ -145,7 +135,7 @@ export class PointingTestComponent implements OnInit {
         const dfmY = Math.abs(this.middleY2 - y);
         const dfmPow2 = Math.pow(dfmX, 2) + Math.pow(dfmY, 2);
         const dfm = Math.sqrt(dfmPow2);
-        this.distanceFromMiddle.push(dfm);
+        this.distanceFromMiddle.push(Math.round((dfm + Number.EPSILON) * 100) / 100);
       }
     } else {
       this.missClickCounter++;
@@ -165,6 +155,8 @@ export class PointingTestComponent implements OnInit {
     if (this.rectClickCounter == 0) {
       const mT = this.timeStop - this.timeStart;
       this.moveTime.push(mT);
+      console.log('Obliczony czas wskazania: ' + mT);
+      this.timeStart = new Date().getTime();
 
       var c = <HTMLCanvasElement>document.getElementById("pointingCanvas");
       var ctx = c.getContext("2d");
@@ -196,6 +188,10 @@ export class PointingTestComponent implements OnInit {
   sendResult() {
     this.running = false;
     this.pauseTimer();
+    const mT = this.timeStop - this.timeStart;
+    this.moveTime.push(mT);
+    console.log('Obliczony czas wskazania: ' + mT);
+    console.log('Odległości kliknięć od środka: ' + this.distanceFromMiddle);
 
     this.pointingService.setPointingResult(this.missClickCounter, this.distanceFromMiddle, this.moveTime, this.numOfAttempts).subscribe(
       () => {

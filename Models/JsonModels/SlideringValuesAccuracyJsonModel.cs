@@ -4,16 +4,16 @@ namespace DataEnteringQuality.Models.JsonModels
 {
     public class SlideringValuesAccuracyJsonModel
     {
-        [JsonProperty("WARTOŚĆ ZADANA")]
+        [JsonProperty("C0")]
         public int ValueToSet { get; set; }
 
-        [JsonProperty("WARTOŚC USTAWIONA")]
+        [JsonProperty("C")]
         public string ValueFromTest { get; set; }
 
-        [JsonProperty("BŁĄD BEZWZGLĘDNY")]
+        [JsonProperty("γ")]
         public string Bb { get; set; }
 
-        [JsonProperty("BŁĄD WZGLĘDNY")]
+        [JsonProperty("d")]
         public string Bw { get; set; }
     }
 }

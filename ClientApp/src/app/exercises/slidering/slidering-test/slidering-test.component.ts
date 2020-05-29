@@ -24,9 +24,9 @@ export class SlideringTestComponent implements OnInit {
     this.testSettings = slideringService.testSettings;
     this.valuesFromTest = [];
     this.timeLeft = this.testSettings.time;
-    this.Tm = [this.testSettings.numOfAttempts];
-    this.timeStart = [this.testSettings.numOfAttempts];
-    this.timeStop = [this.testSettings.numOfAttempts];
+    this.Tm = [];
+    this.timeStart = [];
+    this.timeStop = [];
   }
 
   ngOnInit() {
@@ -37,16 +37,21 @@ export class SlideringTestComponent implements OnInit {
   }
 
   getStartTime(i: number) {
-    this.timeStart[i] = new Date().getTime();
+    const t = new Date().getTime();
+    this.timeStart.push(t);
+    console.log('Czas rozpoczęcia: ' + t);
   }
 
   getStopTime(i: number) {
-    this.timeStop[i] = new Date().getTime();
+    const t = new Date().getTime();
+    this.timeStop.push(t);
+    console.log('Czas zakończenia: ' + t);
   }
 
   calculateTime() {
-    for (let index = 0; index < this.testSettings.numOfAttempts; index++) {
-      this.Tm[index] = this.timeStop[index] - this.timeStart[index];
+    for (let index = 0; index < this.timeStop.length; index++) {
+      const Tm = this.timeStop[index] - this.timeStart[index];
+      this.Tm.push(Tm);
     }
   }
 
@@ -79,9 +84,6 @@ export class SlideringTestComponent implements OnInit {
   private fillValuesFromTestWithZero() {
     for (let index = 0; index < this.testSettings.numOfAttempts; index++) {
       this.valuesFromTest[index] = 0;
-      this.Tm[index] = 0;
-      this.timeStart[index] = 0;
-      this.timeStop[index] = 0;
     }
   }
 
