@@ -89,7 +89,7 @@ export class PointingTestComponent implements OnInit {
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
 
-    if (x >= this.middleX - this.w / 2 && x <= this.middleX + this.w / 2) {
+    if ((x >= this.middleX - this.w / 2 && x <= this.middleX + this.w / 2) && (y >= this.middleY - this.w / 2 && y <= this.middleY + this.w / 2)) {
       if (this.rectClickCounterArray[0] == false) {
 
         if (this.rectClickCounter == 2) {
@@ -107,10 +107,11 @@ export class PointingTestComponent implements OnInit {
         var ctx = canvas.getContext("2d");
         ctx.fillRect(this.x, this.y, this.w, this.w);
 
-        const dfm = Math.abs(this.middleX - x);
+        const dfmX = Math.abs(this.middleX - x);
+        const dfm = Math.sqrt(dfmX);
         this.distanceFromMiddle.push(Math.round((dfm + Number.EPSILON) * 100) / 100);
       }
-    } else if (x >= this.middleX2 - this.w / 2 && x <= this.middleX2 + this.w / 2) {
+    } else if ((x >= this.middleX2 - this.w / 2 && x <= this.middleX2 + this.w / 2) && (y >= this.middleY2 - this.w / 2 && y <= this.middleY2 + this.w / 2)) {
       if (this.rectClickCounterArray[1] == false) {
 
         if (this.rectClickCounter == 2) {
@@ -128,7 +129,8 @@ export class PointingTestComponent implements OnInit {
         var ctx = canvas.getContext("2d");
         ctx.fillRect(this.x2, this.y2, this.w, this.w);
 
-        const dfm = Math.abs(this.middleX2 - x);
+        const dfmX = Math.abs(this.middleX2 - x);
+        const dfm = Math.sqrt(dfmX);
         this.distanceFromMiddle.push(Math.round((dfm + Number.EPSILON) * 100) / 100);
       }
     } else {
