@@ -19,7 +19,7 @@ export class SlideringService {
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
     this.slideringSettings = new SlideringSettings();
     this.slideringResult = new SlideringResult();
-    this.student = JSON.parse(localStorage.getItem('currentStudent'));
+    this.student = JSON.parse(sessionStorage.getItem('currentStudent'));
     this.numOfTest = 0;
   }
 

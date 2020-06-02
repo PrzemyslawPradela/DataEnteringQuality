@@ -20,7 +20,7 @@ export class EnteringService {
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
     this.enteringSettings = new EnteringSettings();
     this.enteringResult = new EnteringResult();
-    this.student = JSON.parse(localStorage.getItem('currentStudent'));
+    this.student = JSON.parse(sessionStorage.getItem('currentStudent'));
     this.numOfTest = 0;
   }
 

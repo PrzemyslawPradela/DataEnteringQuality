@@ -13,7 +13,7 @@ export class StudentService {
   public currentStudent: Observable<Student>;
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
-    this.currentStudentSubject = new BehaviorSubject<Student>(JSON.parse(localStorage.getItem('currentStudent')));
+    this.currentStudentSubject = new BehaviorSubject<Student>(JSON.parse(sessionStorage.getItem('currentStudent')));
     this.currentStudent = this.currentStudentSubject.asObservable();
   }
 
@@ -28,13 +28,13 @@ export class StudentService {
   register(student: Student) {
     return this.http.post<any>(this.baseUrl + 'api/students/register', student)
       .pipe(map(student => {
-        localStorage.setItem('currentStudent', JSON.stringify(student));
+        sessionStorage.setItem('currentStudent', JSON.stringify(student));
         this.currentStudentSubject.next(student);
       }));
   }
 
   removeStudentFromStorage() {
-    localStorage.removeItem('currentStudent');
+    sessionStorage.removeItem('currentStudent');
     this.currentStudentSubject.next(null);
   }
 

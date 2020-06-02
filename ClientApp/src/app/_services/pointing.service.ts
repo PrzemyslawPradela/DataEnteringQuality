@@ -18,7 +18,7 @@ export class PointingService {
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
     this.pointingSettings = new PointingSettings();
     this.pointingResult = new PointingResult();
-    this.student = JSON.parse(localStorage.getItem('currentStudent'));
+    this.student = JSON.parse(sessionStorage.getItem('currentStudent'));
     this.numOfTest = 0;
   }
 
